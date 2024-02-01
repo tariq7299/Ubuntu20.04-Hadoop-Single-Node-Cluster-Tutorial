@@ -1,4 +1,6 @@
 -   What is the difference between Basic Session and Enhanced Session ??
 -   Assing 4GB of memory to each virtual machine
--   Get the user name and password of the VM and Ubuntu
+-   try to use Enhanced session in Hyber-V
 -   Create master and slave
+-   what is MapReduce ??
+-   Don't forget to add steps of configuring Ubuntu in VM to make Enhanced session mode work
