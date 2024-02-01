@@ -1,3 +1,4 @@
 -   What is the difference between Basic Session and Enhanced Session ??
 -   Assing 4GB of memory to each virtual machine
--   
+-   Get the user name and password of the VM and Ubuntu
+-   Create master and slave
