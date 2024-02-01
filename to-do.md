@@ -1,6 +1,13 @@
--   What is the difference between Basic Session and Enhanced Session ??
--   Assing 4GB of memory to each virtual machine
--   try to use Enhanced session in Hyber-V
+-   What is the difference between Basic Session and Enhanced Session ?? *DONE*
+-   Assing 4GB of memory to master virtual machine *DONE*
+-   try to use Enhanced session in Hyber-V *DONE*
 -   Create master and slave
 -   what is MapReduce ??
--   Don't forget to add steps of configuring Ubuntu in VM to make Enhanced session mode work
+-   Don't forget to add steps of configuring Ubuntu in VM to make Enhanced session mode work *DONE*
+-   What is Single Node Cluster ? and does it have master and slave nodes or not?
+-   Create a second VM that will act as a slave node (DataNode), and connect in a single network
+-   What is the difference between those three modes:  
+    -   Local (Standalone) Mode
+    -   Pseudo-Distributed Mode
+    -   Fully-Distributed Mode
+-
