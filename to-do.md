@@ -10,4 +10,4 @@
     -   Local (Standalone) Mode
     -   Pseudo-Distributed Mode
     -   Fully-Distributed Mode
--
+- Review your steps and documentaion so far in README

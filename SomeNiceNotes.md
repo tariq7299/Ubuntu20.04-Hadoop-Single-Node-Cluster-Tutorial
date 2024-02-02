@@ -26,3 +26,19 @@
 One "master" server/Node, and you specify on it "NameNode: http://master:50070", "JobTracker: http://master:50030"  
 Another "secondary NameNode"  
 Finally one or more "slave" server/Node, and you need to sepecify the "DataNode: http...", and "TaskTracker: http://..." for each one of them  
+
+A **Single Node Cluster** in Hadoop is a type of setup where all the Hadoop daemons, including the NameNode, DataNode, Secondary NameNode, ResourceManager, and NodeManager, run on a single machine¹²³. This setup is often used for learning, experimenting, and testing purposes¹²³.
+
+In this context, the terms "master" and "slave" refer to the roles that different nodes play in the Hadoop architecture¹²³. In a Single Node Cluster, both the master and slave services are running on the same machine¹²³.
+
+Here's a brief explanation of these roles:
+
+- **Master Nodes**: These are the nodes that control and manage the data storage and processing tasks in the cluster¹²³. In Hadoop, the NameNode and ResourceManager are considered master nodes¹²³.
+    - **NameNode**: Manages the file system metadata and regulates access to files by clients¹²³.
+    - **ResourceManager**: Manages the use of resources across the cluster¹²³.
+
+- **Slave Nodes**: These are the nodes that store the data and perform the computations¹²³. In Hadoop, the DataNode and NodeManager are considered slave nodes¹²³.
+    - **DataNode**: Stores and retrieves data blocks when they are told to (by clients or the NameNode), and reports back to the NameNode periodically with lists of blocks that they are storing¹²³.
+    - **NodeManager**: Manages the execution of tasks on each data node¹²³.
+
+So, in a Single Node Cluster, the same machine acts as both the master and the slave, running all the services¹²³.
