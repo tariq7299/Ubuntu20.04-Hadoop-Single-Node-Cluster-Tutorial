@@ -11,3 +11,4 @@
     -   Pseudo-Distributed Mode
     -   Fully-Distributed Mode
 - Review your steps and documentaion so far in README
+-   Add numbers to steps !!
