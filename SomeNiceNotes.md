@@ -42,3 +42,4 @@ Here's a brief explanation of these roles:
     - **NodeManager**: Manages the execution of tasks on each data node¹²³.
 
 So, in a Single Node Cluster, the same machine acts as both the master and the slave, running all the services¹²³.
+
