@@ -53,6 +53,13 @@
    ```bash
    yarn application -kill <application_id>
    ```
+**Some nice common commands**:  
+``` bash
+/usr/local/hadoop/bin/hdfs dfs -put ./testStringFile.txt /input
+/usr/local/hadoop/bin/hdfs dfs -put -f ./testStringFile.txt /input # This will overwrite the file if it is already exists
+/usr/local/hadoop/bin/hdfs dfs -cat /output/*
+
+```
 
 ### Hadoop Cluster Management:
 
@@ -82,7 +89,7 @@
 
 1. **Edit Hadoop configurations:**
    ```bash
-   nano $HADOOP_HOME/etc/hadoop/hdfs-site.xml
+   nano /usr/local/hadoop/etc/hadoop/hdfs-site.xml
    ```
 
 2. **Reload Hadoop configurations:**

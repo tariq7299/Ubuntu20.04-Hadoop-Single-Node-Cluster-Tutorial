@@ -1,4 +1,4 @@
-Sure, here's a quick Ubuntu terminal cheat sheet:
+
 
 **File Operations**
 - `ls`: List files in the current directory
@@ -36,15 +36,73 @@ Sure, here's a quick Ubuntu terminal cheat sheet:
 - `uname -a`: Show kernel information
 - `df`: Show disk usage
 - `du`: Show directory space usage
-- `free`: Show memory and swap usage
+- `free`: Show memory and swap usage  
 
-Remember, you might need to use `sudo` before some commands depending on your user permissions¹²³⁴.
 
-I hope this helps! Let me know if you have any other questions..
+&nbsp;  
 
-Source: Conversation with Bing, 2/3/2024
-(1) Linux Commands Cheat Sheet {with Free Downloadable PDF} - phoenixNAP. https://phoenixnap.com/kb/linux-commands-cheat-sheet.
-(2) The Linux command line for beginners | Ubuntu. https://ubuntu.com/tutorials/command-line-for-beginners.
-(3) GitHub - JREAM/ubuntu-cheatsheet: Ubuntu Terminal Cheatsheet. https://github.com/JREAM/ubuntu-cheatsheet.
-(4) Linux Commands Cheat Sheet: Beginner to Advanced - GeeksforGeeks. https://www.geeksforgeeks.org/linux-commands-cheat-sheet/.
-(5) omgubuntu.co.uk. https://www.omgubuntu.co.uk/2021/06/major-ubuntu-rebrand-planned-is-this-ubuntus-new-logo.
+---
+---
+---  
+
+&nbsp;
+
+
+**Colorful Output (ANSI Escape Sequences)**:
+   - Use ANSI escape sequences to display colored text:
+     ```
+     echo -e "\\033[1;31mHello, World!\\033[0m"
+     ```
+   - This will print "Hello, World!" in red.
+
+**Timestamps**:
+   - Create a timestamp using:
+     ```
+     echo "Current date and time: $(date)"
+     ```
+
+**List Users**:
+   - To extract a list of users on your system:
+     ```
+     cut -d: -f1 /etc/passwd
+     ```
+
+**Check Software Version**:
+   - To see the version of a specific package (e.g., `firefox`):
+     ```
+     apt show firefox
+     ```
+
+**Disable/Enable GUI on Boot**:
+   - Disable GUI (graphical interface) on boot:
+     ```
+     sudo systemctl set-default multi-user.target
+     ```
+   - Enable GUI on boot:
+     ```
+     sudo systemctl set-default graphical.target
+     ```
+
+**Remove GNOME Dock**:
+   - If you're using GNOME, remove the dock panel:
+     ```
+     gnome-extensions disable ubuntu-dock@ubuntu.com
+     ```
+
+**List and Delete PPA Repositories**:
+   - List PPA repositories:
+     ```
+     ls /etc/apt/sources.list.d/
+     ```
+   - Delete a specific PPA repository:
+     ```
+     sudo rm /etc/apt/sources.list.d/repository-name.list
+     ```
+
+**Disable Automatic Updates**:  
+-   To disable automatic updates:  
+
+    ```
+      sudo systemctl stop apt-daily.timer  
+      sudo systemctl disable apt-daily.timer
+    ```
