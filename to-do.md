@@ -4,11 +4,15 @@
 -   Create master and slave
 -   what is MapReduce ??
 -   Don't forget to add steps of configuring Ubuntu in VM to make Enhanced session mode work *DONE*
--   What is Single Node Cluster ? and does it have master and slave nodes or not?
+-   What is Single Node Cluster ? and does it have master and slave nodes or not? *DONE*
 -   Create a second VM that will act as a slave node (DataNode), and connect in a single network
 -   What is the difference between those three modes:  
     -   Local (Standalone) Mode
     -   Pseudo-Distributed Mode
     -   Fully-Distributed Mode
-- Review your steps and documentaion so far in README
+- Review your steps and documentaion so far in README *DONE*
 -   Add numbers to steps !!
+-   Add some more space to my VM
+-   Organize my README:  
+    -   Create three sections (README-Prerequists&Configuring VM-HadoopInstalling-RangerInstalling)
+    -   Change the name of the Repo to more decisive or even create a whole two repos! (one for (Ubuntu hadoop Single node cluster) and one for (Single Node Cluster and Ranger and Ldap) )
