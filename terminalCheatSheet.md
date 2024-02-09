@@ -106,3 +106,10 @@
       sudo systemctl stop apt-daily.timer  
       sudo systemctl disable apt-daily.timer
     ```
+
+**Disk commands**:  
+``` bash
+df -l # Shows all partitions and disks
+sudo cfdisk # Shows hard drives and enable to expand any of them
+
+```

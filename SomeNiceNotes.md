@@ -43,3 +43,4 @@ Here's a brief explanation of these roles:
 
 So, in a Single Node Cluster, the same machine acts as both the master and the slave, running all the services¹²³.
 
+**Checkpoints in hyper-v**: Actually (Automatic) checkpoints in Hyper-V merge automatically if you wait a little bit after you turn off your machine
