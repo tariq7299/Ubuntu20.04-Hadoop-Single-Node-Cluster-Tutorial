@@ -102,7 +102,7 @@
 **Disable Automatic Updates**:  
 -   To disable automatic updates:  
 
-    ```
+    ``` bash
       sudo systemctl stop apt-daily.timer  
       sudo systemctl disable apt-daily.timer
     ```
@@ -111,5 +111,6 @@
 ``` bash
 df -l # Shows all partitions and disks
 sudo cfdisk # Shows hard drives and enable to expand any of them
+sudo fdisk -l # Identify the current Ubuntu partition (usually sda2)
 
 ```

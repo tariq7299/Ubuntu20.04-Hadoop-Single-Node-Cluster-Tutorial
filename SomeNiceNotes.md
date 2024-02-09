@@ -44,3 +44,11 @@ Here's a brief explanation of these roles:
 So, in a Single Node Cluster, the same machine acts as both the master and the slave, running all the services¹²³.
 
 **Checkpoints in hyper-v**: Actually (Automatic) checkpoints in Hyper-V merge automatically if you wait a little bit after you turn off your machine
+
+In Linux, the filesystem, logical volume, and physical volume are different layers of your storage architecture¹²³⁴⁵. Here's a brief explanation:
+
+- **Filesystem**: This is the top layer that your applications interact with. It organizes and manages your files and directories¹²³⁴⁵.
+- **Logical Volume**: This is a virtual partition that can span multiple physical volumes. It provides a layer of abstraction between the filesystem and the physical volumes¹²³⁴⁵.
+- **Physical Volume**: This is your actual physical storage device (like a hard disk or SSD) or a partition on that device¹²³⁴⁵.
+
+# Ranger  
