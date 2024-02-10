@@ -66,8 +66,6 @@ wget -P ~/Downloads https://downloads.mysql.com/archives/get/p/3/file/mysql-conn
 sudo dpkg -i ~/Downloads/mysql-connector-j_8.0.33-1ubuntu20.04_all.deb # This will install the .deb package
 ```  
 
- 
-
 ## Install And Build Ranger from the source  
 
 1-  Clone the ranger source code  
@@ -96,9 +94,19 @@ echo 'export PATH=$PATH:$JAVA_HOME/bin' >> ~/.bashrc
 cd ~/dev/incubator-ranger
 export MAVEN_OPTS="-Xmx512M" 
 mvn clean compile package assembly:assembly install
+```  
 
-# Verify all the tar files under the target directory:
-ls target/*.tar.gz
-# This supposed to be the output
-#  ranger-0.5.0-admin.tar.gz ranger-0.5.0-kms.tar.gz ranger-0.5.0-storm-plugin.tar.gz ranger-0.5.0-hbase-plugin.tar.gz ranger-0.5.0-knox-plugin.tar.gz ranger-0.5.0-usersync.tar.gz ranger-0.5.0-hdfs-plugin.tar.gz ranger-0.5.0-migration-util.tar.gz ranger-0.5.0-yarn-plugin.tar.gz ranger-0.5.0-hive-plugin.tar.gz ranger-0.5.0-solr-plugin.tar.gz ranger-0.5.0-kafka-plugin.tar.gz ranger-0.5.0-src.tar.gz
-```
+
+&nbsp;
+&nbsp;  
+&nbsp;  
+  
+
+# ***FAILD HERE!!!***
+# Potentional reasons:
+  - JAVA (JDK) version is not compatible with this source code  
+  
+
+&nbsp;
+&nbsp;  
+&nbsp;  
