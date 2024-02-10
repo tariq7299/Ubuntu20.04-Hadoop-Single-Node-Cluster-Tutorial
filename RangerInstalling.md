@@ -19,9 +19,13 @@ tar -xvf apache-maven-3.9.6-bin.tar.gz -C /usr/local # This is going to *tar* th
 cd /usr/local
 
 # Set some env variables
-export M2_HOME=/usr/local/apache-­maven-­<Version>
+export M2_HOME=/usr/local/apache-maven-3.9.6
 export M2=$M2_HOME/bin
 export PATH=$M2:$PATH
+
+# Just to make the changes permenant
+echo 'export PATH=$M2:$PATH' >> ~/.bashrc
+source ~/.bashrc 
   
 # Now to test your install of Maven, enter the following command
 mvn -version
@@ -55,6 +59,46 @@ sudo mysql_secure_installation
 ```  
 
 3-  Download the MySQL JDBC, and then untarit, then finally copy the .jar file to a common location where everyone be abel to access it.
-``` bash  
 
+``` bash  
+# This will download the appropriate MySQL JDBC packge for Ubuntu 20.04 LTS
+wget -P ~/Downloads https://downloads.mysql.com/archives/get/p/3/file/mysql-connector-j_8.0.33-1ubuntu20.04_all.deb
+sudo dpkg -i ~/Downloads/mysql-connector-j_8.0.33-1ubuntu20.04_all.deb # This will install the .deb package
+```  
+
+ 
+
+## Install And Build Ranger from the source  
+
+1-  Clone the ranger source code  
+Ranger is still an incubater porject !, so that means there not yet compiled version of it (.exe), so we have to build Ranger using the source code!  
+``` bash  
+mkdir ~/dev  
+cd ~/dev  
+git clone https://github.com/apache/incubator-ranger.git  
+cd incubator-ranger  
+git checkout ranger-0.5  
+```
+
+2-  Add some evn variables to `.bashrc`  
+``` bash    
+export MAVEN_OPTS="-Xmx512M"
+export JAVA_HOME=$(readlink -f `which java` | sed "s:/bin/java::")
+export PATH=$JAVA_HOME/bin:$PATH
+
+# This will make the JAVA_HOME and PATH permenant ! (because ~/.bashrc runs on every boot)
+echo 'export JAVA_HOME=$(readlink -f `which java` | sed "s:/bin/java::")' >> ~/.bashrc
+echo 'export PATH=$PATH:$JAVA_HOME/bin' >> ~/.bashrc
+```
+
+3-  Build the source code
+``` bash    
+cd ~/dev/incubator-ranger
+export MAVEN_OPTS="-Xmx512M" 
+mvn clean compile package assembly:assembly install
+
+# Verify all the tar files under the target directory:
+ls target/*.tar.gz
+# This supposed to be the output
+#  ranger-0.5.0-admin.tar.gz ranger-0.5.0-kms.tar.gz ranger-0.5.0-storm-plugin.tar.gz ranger-0.5.0-hbase-plugin.tar.gz ranger-0.5.0-knox-plugin.tar.gz ranger-0.5.0-usersync.tar.gz ranger-0.5.0-hdfs-plugin.tar.gz ranger-0.5.0-migration-util.tar.gz ranger-0.5.0-yarn-plugin.tar.gz ranger-0.5.0-hive-plugin.tar.gz ranger-0.5.0-solr-plugin.tar.gz ranger-0.5.0-kafka-plugin.tar.gz ranger-0.5.0-src.tar.gz
 ```
