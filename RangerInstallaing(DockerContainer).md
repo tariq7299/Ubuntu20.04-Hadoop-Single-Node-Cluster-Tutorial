@@ -62,3 +62,13 @@ export ENABLED_RANGER_SERVICES="tagsync,hadoop,hbase,kafka,hive,knox,kms"
 # Execute this command to bring the services up (after successful build if it is not already build)
 ./ranger_in_docker up
 ```
+
+
+&nbsp;
+&nbsp;  
+&nbsp;  
+  
+
+# ***FAILD HERE!!!***
+# Potentional reasons:
+  - Some thing is wrong in the ranger code itself!  

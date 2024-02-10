@@ -106,7 +106,3 @@ mvn clean compile package assembly:assembly install
 # Potentional reasons:
   - JAVA (JDK) version is not compatible with this source code  
   
-
-&nbsp;
-&nbsp;  
-&nbsp;  
