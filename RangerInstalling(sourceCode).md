@@ -11,20 +11,20 @@ su - tariq # This my username in sudo group
 
 # Download maven latest distribution tar from apache maven site 
 # This the appropriate version of maven that is suitble for JDK/JAVA 7
-wget -P ~/Downloads https://dlcdn.apache.org/maven/maven-3/3.8.8/binaries/apache-maven-3.8.8-bin.tar.gz
+wget -P ~/Downloads https://dlcdn.apache.org/maven/maven-3/3.9.6/binaries/apache-maven-3.9.6-bin.tar.gz
 
 sudo mkdir /usr/local/maven
 
 # Unzip the file
-tar -xvf ~/Downloads/apache-maven-3.8.8-bin.tar.gz -C /usr/local/maven # This is going to *tar* the file into /usr/local
+tar -xvf ~/Downloads/apache-maven-3.9.6-bin.tar.gz -C /usr/local/maven # This is going to *tar* the file into /usr/local
 
 # Set some env variables
-export M2_HOME=/usr/local/maven/apache-maven-3.8.8
+export M2_HOME=/usr/local/maven/apache-maven-3.9.6
 export M2=$M2_HOME/bin
 export PATH=$M2:$PATH
 
 # Just to make the changes permenant
-echo 'export M2_HOME=/usr/local/maven/apache-maven-3.8.8' >> ~/.bashrc
+echo 'export M2_HOME=/usr/local/maven/apache-maven-3.9.6' >> ~/.bashrc
 echo 'export M2=$M2_HOME/bin' >> ~/.bashrc
 echo 'export PATH=$M2:$PATH' >> ~/.bashrc
 source ~/.bashrc 
@@ -107,3 +107,4 @@ mvn clean compile package assembly:assembly install
 # ***FAILD HERE!!!***
 ## Potentional reasons:
   - The HBase dependecy in maven is corrupted, because when maven try to install and download HBase from the remote repo because it is a dependency, it doesn't find it !, because the url provided in the source code `Ranger 0.5` leads to *404 NOT FOUND* 
+

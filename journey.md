@@ -23,4 +23,12 @@
 - So now I tried to download HBase dependecy manually and then edit the `pom.xml` file, of the ranger source code, and tell maven that the hbase dependecey is acually located localy on my device  
 - But this method also faild!  
 *THEN*
-- Then i tried tuorial-4 [ApacheRangerofficialPage](https://ranger.apache.org/quick_start_guide.html) agian and i succedded with `sudo` and it worked !!!
+- Then i tried tuorial-4 [ApacheRangerofficialPage](https://ranger.apache.org/quick_start_guide.html) agian and i succedded with `sudo` and then it showed a new error !!!!, the error is about a faild test regarding `Knox`    
+-   So I tried to turn of tests `sudo mvn -Pall -DskipTests=true clean compile package install` it faild !
+*THEN*  
+-   I tried to upgrade maven to the latest version and then tried this `sudo /usr/local/maven/apache-maven-3.9.6/bin/mvn -Pall -DskipTests=true -Dspotbugs.skip=true -Dchkstyle.skip=true clean compile package install `  
+-   And FAILD!!!
+-   And now it show this error `ppeard  
+- [ERROR] Failed to execute goal org.apache.maven.plugins:maven-assembly-plugin:2.6:single (default) on project ranger-distro: Failed to create assembly: Artifact: org.apache.ranger:ranger-trino-plugin:jar:3.0.0-SNAPSHOT (included by module) does not have an artifact with a file. Please ensure the package phase is run before the assembly is generated.` ????!?!?!?!  
+....
+ 
