@@ -106,6 +106,4 @@ mvn clean compile package assembly:assembly install
 
 # ***FAILD HERE!!!***
 ## Potentional reasons:
-  - JAVA (JDK) version is not compatible with this source code  
-  
-## *STORY::::* 
+  - The HBase dependecy in maven is corrupted, because when maven try to install and download HBase from the remote repo because it is a dependency, it doesn't find it !, because the url provided in the source code `Ranger 0.5` leads to *404 NOT FOUND* 
