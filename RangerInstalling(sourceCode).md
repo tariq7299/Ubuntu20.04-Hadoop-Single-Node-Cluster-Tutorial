@@ -1,4 +1,4 @@
-# Installing And Configuring *Ranger*  
+# Installing And Configuring *Ranger*  version 0.5 from [ApacheRanger0.5Installation-ConfluenceWebSite](https://cwiki.apache.org/confluence/display/RANGER/Apache+Ranger+0.5.0+Installation)
 
 ## Some Prerequistes before we actually install *Ranger*  
 
@@ -8,22 +8,24 @@ You need first to switch to root user or *sudo* them
 
 ``` bash
 su - tariq # This my username in sudo group
-cd ~/Downloads
 
-# Download maven latest distribution tar from apache maven site
-wget https://dlcdn.apache.org/maven/maven-3/3.9.6/binaries/apache-maven-3.9.6-bin.tar.gz
+# Download maven latest distribution tar from apache maven site 
+# This the appropriate version of maven that is suitble for JDK/JAVA 7
+wget -P ~/Downloads https://dlcdn.apache.org/maven/maven-3/3.8.8/binaries/apache-maven-3.8.8-bin.tar.gz
+
+sudo mkdir /usr/local/maven
 
 # Unzip the file
-tar -xvf apache-maven-3.9.6-bin.tar.gz -C /usr/local # This is going to *tar* the file into /usr/local
-
-cd /usr/local
+tar -xvf ~/Downloads/apache-maven-3.8.8-bin.tar.gz -C /usr/local/maven # This is going to *tar* the file into /usr/local
 
 # Set some env variables
-export M2_HOME=/usr/local/apache-maven-3.9.6
+export M2_HOME=/usr/local/maven/apache-maven-3.8.8
 export M2=$M2_HOME/bin
 export PATH=$M2:$PATH
 
 # Just to make the changes permenant
+echo 'export M2_HOME=/usr/local/maven/apache-maven-3.8.8' >> ~/.bashrc
+echo 'export M2=$M2_HOME/bin' >> ~/.bashrc
 echo 'export PATH=$M2:$PATH' >> ~/.bashrc
 source ~/.bashrc 
   
@@ -103,6 +105,7 @@ mvn clean compile package assembly:assembly install
   
 
 # ***FAILD HERE!!!***
-# Potentional reasons:
+## Potentional reasons:
   - JAVA (JDK) version is not compatible with this source code  
   
+## *STORY::::* 

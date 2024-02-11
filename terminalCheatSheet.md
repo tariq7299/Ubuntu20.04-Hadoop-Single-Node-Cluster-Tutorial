@@ -114,3 +114,16 @@ sudo cfdisk # Shows hard drives and enable to expand any of them
 sudo fdisk -l # Identify the current Ubuntu partition (usually sda2)
 
 ```
+
+**How to remova a package completely from your system**  
+Letts say for examle we want to remove maven package compleletey !
+``` bash    
+sudo apt-get remove maven
+sudo apt-get remove --auto-remove maven
+sudo apt-get purge maven
+rm -rf ~/.m2
+
+
+
+
+```
