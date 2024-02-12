@@ -124,6 +124,25 @@ sudo apt-get purge maven
 rm -rf ~/.m2
 
 
+sudo apt-get remove openjdk-8-jdk;sudo apt-get remove --auto-remove openjdk-8-jdk;sudo apt-get purge openjdk-8-jdk
 
+sudo apt-get remove openjdk-11-jdk;sudo apt-get remove --auto-remove openjdk-11-jdk;sudo apt-get purge openjdk-11-jdk
 
+openjdk-11-jdk
+
+```  
+
+**To list all the files installed by a package use**  
+
+```bash   
+dpkg -L openjdk-8-jdk
+```  
+
+**To install two versions of java and switch between them**  
+```bash    
+sudo apt install openjdk-8-jdk openjdk-8-jre
+sudo update-alternatives --config java  
+# Then choose the suitabel version for you  
+
+export JAVA_HOME=<path to java home of the choosen one>
 ```

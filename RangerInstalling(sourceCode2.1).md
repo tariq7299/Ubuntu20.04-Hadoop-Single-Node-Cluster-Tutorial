@@ -1,42 +1,35 @@
-# Installing And Configuring *Ranger*  version 0.5 from [ApacheRangerLatestVersion-OfficialApacheWebsite](https://ranger.apache.org/quick_start_guide.html)
+# Installing And Configuring *Ranger*  version 0.5 from [ApacheRanger0.5Installation-ConfluenceWebSite](https://cwiki.apache.org/confluence/display/RANGER/Apache+Ranger+0.5.0+Installation)
 
 ## Some Prerequistes before we actually install *Ranger*  
+### Installing the correct version of java (JDK 8)  
 
 ### Installing Maven
 
-You need first to switch to root user or *sudo* them : `su - tariq # This my username in sudo group`  
-
-*Note*: This is the only way to install the latest version of maven, the upcoming other way of using `sudo apt install maven` doesn't   
+You need first to switch to root user or *sudo* them  
 
 ``` bash
+su - tariq # This my username in sudo group
+
 # Download maven latest distribution tar from apache maven site 
 # This the appropriate version of maven that is suitble for JDK/JAVA 7
 wget -P ~/Downloads https://dlcdn.apache.org/maven/maven-3/3.9.6/binaries/apache-maven-3.9.6-bin.tar.gz
 
+sudo mkdir /usr/local/maven
+
 # Unzip the file
-tar -xvf ~/Downloads/apache-maven-3.9.6-bin.tar.gz -C /usr/local # This is going to *tar* the file into /usr/local
+tar -xvf ~/Downloads/apache-maven-3.9.6-bin.tar.gz -C /usr/local/maven # This is going to *tar* the file into /usr/local
 
 # Set some env variables
-export M2_HOME=/usr/local/apache-maven-3.9.6
+export M2_HOME=/usr/local/maven/apache-maven-3.9.6
 export M2=$M2_HOME/bin
 export PATH=$M2:$PATH
 
 # Just to make the changes permenant
-echo 'export M2_HOME=/usr/local/apache-maven-3.9.6' >> ~/.bashrc
+echo 'export M2_HOME=/usr/local/maven/apache-maven-3.9.6' >> ~/.bashrc
 echo 'export M2=$M2_HOME/bin' >> ~/.bashrc
 echo 'export PATH=$M2:$PATH' >> ~/.bashrc
 source ~/.bashrc 
-```      
-
-***OR***  
-
-*Note*: This does'not install the latest version of maven (But it doesn't matter actaully, it will also work)
-``` bash   
-sudo apt update
-sudo apt install maven 
-```    
-
-``` bash    
+  
 # Now to test your install of Maven, enter the following command
 mvn -version
 ```
@@ -83,12 +76,14 @@ Ranger is still an incubater porject !, so that means there not yet compiled ver
 ``` bash  
 mkdir ~/dev  
 cd ~/dev  
-git clone https://github.com/apache/range
-cd ranger  
-````
+git clone https://github.com/apache/incubator-ranger.git  
+cd incubator-ranger  
+git checkout ranger-0.5  
+```
 
 2-  Add some evn variables to `.bashrc`  
 ``` bash    
+export MAVEN_OPTS="-Xmx512M"
 export JAVA_HOME=$(readlink -f `which java` | sed "s:/bin/java::")
 export PATH=$JAVA_HOME/bin:$PATH
 
@@ -98,34 +93,19 @@ echo 'export PATH=$PATH:$JAVA_HOME/bin' >> ~/.bashrc
 ```
 
 3-  Build the source code
-``` bash
-cd ~/dev/ranger
-```  
-
-``` bash  
-# IF you used "sudo apt install maven"
-mvn -Pall clean
-mvn -Pall -DskipTests=true -Dspotbugs.skip=true -Dchkstyle.skip=true clean compile package install
-```  
-***OR***
-
 ``` bash    
+cd ~/dev/incubator-ranger
+export MAVEN_OPTS="-Xmx512M" 
+mvn clean compile package assembly:assembly install
+```  
 
-# IF you manully installed the latest version"
-# I here used the full path on "mvn" .exe because it didn't work otherwise
-sudo /usr/local/maven/apache-maven-3.9.6/bin/mvn -Pall clean 
-sudo /usr/local/maven/apache-maven-3.9.6/bin/mvn -Pall -DskipTests=true -Dspotbugs.skip=true -Dchkstyle.skip=true clean compile package install 
-```    
 
 &nbsp;
 &nbsp;  
 &nbsp;  
-    
+  
 
-# ***FAILD HERE!!!***  
-## Error Appeard  
-- [ERROR] Failed to execute goal org.apache.maven.plugins:maven-assembly-plugin:2.6:single (default) on project ranger-distro: Failed to create assembly: Artifact: org.apache.ranger:ranger-trino-plugin:jar:3.0.0-SNAPSHOT (included by module) does not have an artifact with a file. Please ensure the package phase is run before the assembly is generated. -> [Help 1]  
-
+# ***FAILD HERE!!!***
 ## Potentional reasons:
-  - ?
+  - The HBase dependecy in maven is corrupted, because when maven try to install and download HBase from the remote repo because it is a dependency, it doesn't find it !, because the url provided in the source code `Ranger 0.5` leads to *404 NOT FOUND* 
 
