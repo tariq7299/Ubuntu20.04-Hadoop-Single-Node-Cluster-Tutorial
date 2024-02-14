@@ -99,7 +99,7 @@ git checkout tags/release-ranger-2.4.0 -b ranger-2.4
 # "-Dassembly.plugin.version=3.1.0 -Dhadoop.version=3.3.0 -Dhbase.version=2.3.4 -Dzookeeper.version=3.6.1 -Dhive.version=3.0.0 -Dmysql-connector-java.version=8.0.28" This is just specifying some versions of the other Apache components
 # "'!plugin-ozone, !plugin-solr, !plugin-nifi, !plugin-nifi-registry, !plugin-kudu, !plugin-kms, !ranger-ozone-plugin-shim, !storm-agent, !ranger-storm-plugin-shim, !ranger-solr-plugin-shim, !ranger-atlas-plugin-shim, !plugin-atlas, !plugin-kylin, !ranger-kylin-plugin-shim'" This disables those plugins completely, because we don't need them
 
-sudo /usr/local/apache-maven-3.9.6/bin/mvn clean compile package install -DskipTests=true -Dspotbugs.skip=true -Dchkstyle.skip=true -Dassembly.plugin.version=3.1.0 -Dhadoop.version=3.3.0 -Dhbase.version=2.3.4 -Dzookeeper.version=3.6.1 -Dhive.version=3.0.0 -Dmysql-connector-java.version=8.0.28 -pl '!plugin-ozone, !plugin-solr, !plugin-nifi, !plugin-nifi-registry, !plugin-kudu, !plugin-kms, !ranger-ozone-plugin-shim, !storm-agent, !ranger-storm-plugin-shim, !ranger-solr-plugin-shim, !ranger-atlas-plugin-shim, !plugin-atlas, !plugin-kylin, !ranger-kylin-plugin-shim'
+sudo /usr/local/apache-maven-3.9.6/bin/mvn clean compile package install -DskipTests=true -Dspotbugs.skip=true -Dchkstyle.skip=true -Dassembly.plugin.version=3.1.0 -Dhadoop.version=3.3.0 -Dhbase.version=2.3.4 -Dzookeeper.version=3.6.1 -Dhive.version=3.0.0 -Dmysql-connector-java.version=8.0.33 -pl '!plugin-ozone, !plugin-solr, !plugin-nifi, !plugin-nifi-registry, !plugin-kudu, !plugin-kms, !ranger-ozone-plugin-shim, !storm-agent, !ranger-storm-plugin-shim, !ranger-solr-plugin-shim, !ranger-atlas-plugin-shim, !plugin-atlas, !plugin-kylin, !ranger-kylin-plugin-shim'
 ```  
 
 
@@ -165,3 +165,46 @@ wget -P ~/Downloads https://downloads.mysql.com/archives/get/p/3/file/mysql-conn
 sudo dpkg -i ~/Downloads/mysql-connector-j_8.0.33-1ubuntu20.04_all.deb # This will install the .deb package
 ```   
 
+
+## Installing Solr  
+
+Solr is going to store the audit logs
+
+1-  Go to  `cd ~/git/dev/ranger/security-admin/contrib/solr_for_audit_setup`    
+
+
+2- Create those the necessary folders for solr setup and configuration logs..etc  
+
+```bash  
+sudo mkdir -p /opt/solr/ranger_audit_server/data
+sudo mkdir -p /var/log/solr/ranger_audits
+```
+2- Edit the setup file of solr, and configure this variables 
+```bash
+SOLR_INSTALL = true
+SOLR_DOWNLOAD_URL = https://archive.apache.org/dist/lucene/solr/8.9.0/solr-8.9.0.tgz
+SOLR_INSTALL_FOLDER = /opt/solr
+JAVA_HOME = /usr/lib/jvm/java-11-openjdk-amd64/
+SOLR_USER = solr
+SOLR_RANGER_HOME = /opt/solr/ranger_audit_server
+SOLR_RANGER_PORT = 6083
+SOLR_DEPLOYMENT = standalone
+SOLR_RANGER_DATA_FOLDER = /opt/solr/ranger_audit_server/data
+SOLR_LOG_FOLDER = /var/log/solr/ranger_audits
+SOLR_MAX_MEM = 2g
+``` 
+*Note*: I wasn't able to download the latest versiion of `Solr` becasuse (very stupid reason), the url of the latest version is `https://www.apache.org/dyn/closer.lua/solr/solr/9.5.0/solr-9.5.0.tgz?action=download` and if i wrote as a value to `SOLR_DOWNLOAD_URL`, it will bug the installation process after i execute `./setup.sh`, becasue the developers of `Ranger` and `Solr`, have created a code (I beleive it somthing like a reguler exepression) to extract the file name from the Download URL, and they suppose that the url won't end with a `?action=download` (url query), because the file name that the `.tar` file will be exctracted to will be named `solr-9.5.0.tgz?action=download` and not `solr-9.5.0.tgz`.  
+So I had to use the older format of the older solr versions url `https://archive.apache.org/dist/lucene/solr/8.9.0/solr-8.9.0.tgz`.  
+! so weird bug, it took from me like 1 hour to spot and fix !
+
+3- Run the `.setup.sh` file  
+```bash
+./setup.sh
+```  
+
+4- You can open  `/opt/solr/ranger_audit_server/install_notes.txt`  for instructions to start and stop `Solr`
+
+5- Start `Solr`  
+```bash 
+/opt/solr/ranger_audit_server/scripts/start_solr.sh
+```
