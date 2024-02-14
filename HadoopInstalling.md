@@ -236,15 +236,3 @@ source ~/.bashrc
 &nbsp;    
 &nbsp;    
 &nbsp;    
----  
-
-# Some important info   
-
-Admin username of the ubuntu VM is : tariq  
-Admin Password of the ubuntu VM is : 1122
-  
-Hadoop username: hdoop  
-Hadoop Password: 1122
-
-ResourceManager WebInterface Access on: localhost:8088  
-NameNode WebInterface Access on: localhost:9870
