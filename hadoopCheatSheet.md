@@ -107,7 +107,7 @@
 1. **Check Hadoop version:**
    ```bash
    hadoop version
-   ```
+   ``` 
 
 2. **Check HDFS health:**
    ```bash

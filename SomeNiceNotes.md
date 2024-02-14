@@ -51,4 +51,10 @@ In Linux, the filesystem, logical volume, and physical volume are different laye
 - **Logical Volume**: This is a virtual partition that can span multiple physical volumes. It provides a layer of abstraction between the filesystem and the physical volumes¹²³⁴⁵.
 - **Physical Volume**: This is your actual physical storage device (like a hard disk or SSD) or a partition on that device¹²³⁴⁵.
 
+## Hadoop tips and tricks  
+
+-   Hadoop doesn't start by any user (even `sudo`) other that those two:
+    -   The owner of the `hadoop` folder
+    -   Or if you have set the `HDFS_NAMENODE_USER` `HDFS_DATANODE_USER` ..etc, defined explicitly !
+
 # Ranger  

@@ -79,36 +79,6 @@ sudo apt install git
 sudo apt install gcc
 ```  
 
-### Install MySQL  
-
-1-  First you need to install MySQL
-``` bash
-sudo apt install mysql-server  
-sudo service mysql status # The MySQL service should start automaticlly verify by this command
-sudo systemctl start mysql.service # If not, This will start the my sql service   
-```  
-2-  Configure security installation
-
-This following will prompt you to:
-  - Set a root password (if not already during installation)
-  - Remove anonmous users  
-  - Disallow root login remotely  
-  - Remove the test database
-  - Reload privilege tables      
-
-And I choose *No* for testing purposes!
-``` bash
-sudo mysql_secure_installation
-```  
-
-3-  Download the MySQL JDBC, and then untarit, then finally copy the .jar file to a common location where everyone be abel to access it.
-
-``` bash  
-# This will download the appropriate MySQL JDBC packge for Ubuntu 20.04 LTS
-wget -P ~/Downloads https://downloads.mysql.com/archives/get/p/3/file/mysql-connector-j_8.0.33-1ubuntu20.04_all.deb
-sudo dpkg -i ~/Downloads/mysql-connector-j_8.0.33-1ubuntu20.04_all.deb # This will install the .deb package
-```   
-
 ## Install And Build Ranger from the source  
 
 1-  Clone the ranger source code  
@@ -137,4 +107,60 @@ sudo /usr/local/apache-maven-3.9.6/bin/mvn clean compile package install -DskipT
 ```bash  
 # List all the tar files,
 ls target/*.tar.gz
+```  
+
+## Installing MySQL   
+
+1-  First you need to install MySQL
+``` bash
+sudo apt install mysql-server  
+sudo systemctl status mysql.service # The MySQL service should start automaticlly verify by this command
+sudo systemctl start mysql.service # If not, This will start the my sql service   
+```   
+
+2-  Configure security installation
+
+This following will prompt you to:
+  - Set a root password (if not already during installation)
+  - Remove anonmous users  
+  - Disallow root login remotely  
+  - Remove the test database
+  - Reload privilege tables      
+
+And I choose *No* for testing purposes!,
+except for removing anynomes users removal
+``` bash
+sudo mysql_secure_installation
+```    
+
+3- Change the password of the Mysql"root" user 
+
+```SQL
+# log in into mysql server usin "root" user
+sudo mysql -u root
+ALTER USER 'root'@'localhost' IDENTIFIED BY 'your_new_password';
+FLUSH PRIVILEGES; # Reload privileges tables
 ```
+*Note*: You can access the mysql server using the root user without typing any password, because `auth_socket` is enbled by default by "MySQL" and what it does that it recogizes that you accessed my sql using `root` user of the system (Linux OS), and it authenticate you automaticlly withou typing  password of `root` `MySQL` user
+
+4- Create `admin` user in mysql 
+
+```bash   
+# Login to mysql and create user
+sudo mysql -u root -exitp
+CREATE USER 'admin'@'localhost' IDENTIFIED BY 'password12';
+GRANT ALL PRIVILEGES ON *.* TO 'admin'@'localhost' WITH GRANT OPTION;
+FLUSH PRIVILEGES;
+```  
+5- Create a database for ranger  
+```sql
+CREATE DATABASE ranger; 
+```
+
+3-  Download the MySQL JDBC, and then untarit, then finally copy the .jar file to a common location where everyone be abel to access it.
+
+``` bash  
+# This will download the appropriate MySQL JDBC packge for Ubuntu 20.04 LTS
+wget -P ~/Downloads https://downloads.mysql.com/archives/get/p/3/file/mysql-connector-j_8.0.33-1ubuntu20.04_all.deb
+sudo dpkg -i ~/Downloads/mysql-connector-j_8.0.33-1ubuntu20.04_all.deb # This will install the .deb package
+```   
