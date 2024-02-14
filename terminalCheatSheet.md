@@ -146,3 +146,12 @@ sudo update-alternatives --config java
 
 export JAVA_HOME=<path to java home of the choosen one>
 ```
+
+**To delete a user**  
+
+```bash
+sudo killall -u solr # Kill all the provessess started by the user first  
+sudo userdel solr  
+```
+
+/opt/solr/ranger_audit_server/scripts/start_solr.sh

@@ -79,7 +79,7 @@ sudo apt install git
 sudo apt install gcc
 ```  
 
-## Install And Build Ranger from the source  
+## Install And Build Ranger from the source
 
 1-  Clone the ranger source code  
 ``` bash  
@@ -172,14 +172,11 @@ Solr is going to store the audit logs
 
 1-  Go to  `cd ~/git/dev/ranger/security-admin/contrib/solr_for_audit_setup`    
 
-
-2- Create those the necessary folders for solr setup and configuration logs..etc  
-
-```bash  
-sudo mkdir -p /opt/solr/ranger_audit_server/data
-sudo mkdir -p /var/log/solr/ranger_audits
-```
 2- Edit the setup file of solr, and configure this variables 
+```bash  
+vim install.properties
+```
+
 ```bash
 SOLR_INSTALL = true
 SOLR_DOWNLOAD_URL = https://archive.apache.org/dist/lucene/solr/8.9.0/solr-8.9.0.tgz
@@ -197,14 +194,40 @@ SOLR_MAX_MEM = 2g
 So I had to use the older format of the older solr versions url `https://archive.apache.org/dist/lucene/solr/8.9.0/solr-8.9.0.tgz`.  
 ! so weird bug, it took from me like 1 hour to spot and fix !
 
-3- Run the `.setup.sh` file  
+
+3- Create some necesseray dir for solr
 ```bash
-./setup.sh
+sudo mkdir -p /opt/solr/ranger_audit_server/data
+;sudo mkdir -p /var/log/solr/ranger_audits
+```
+4- Create new user named `solr` 
+This user will be used to start solr servic (this necessary becasue by default after you run `setup.sh` all the folders and files that will be created will belong to `solr` user)
+```bash
+sudo useradd solr   
+sudo passwd solr
 ```  
 
-4- You can open  `/opt/solr/ranger_audit_server/install_notes.txt`  for instructions to start and stop `Solr`
+5- Run the `.setup.sh` file  
+```bash
+sudo ./setup.sh
+```  
 
-5- Start `Solr`  
+6- You can open  `/opt/solr/ranger_audit_server/install_notes.txt`  for instructions to start and stop `Solr`
+
+7- Start `Solr`  
 ```bash 
-/opt/solr/ranger_audit_server/scripts/start_solr.sh
+su solr # switch to solr user
+/opt/solr/ranger_audit_server/scripts/start_solr.sh # start solr
+
+```
+
+8- Check for solr by accessing the web portal of `localhost:6083`
+
+## Install Ranger Policy Admin  
+
+```bash  
+cd /usr/local  
+sudo tar xvf ~/git/dev/ranger/target/ranger-2.4.0-admin.tar.gz  
+sudo ln -s ranger-2.4.0-admin/ ranger-admin  
+cd /usr/local/ranger-admin/
 ```
