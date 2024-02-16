@@ -12,6 +12,8 @@
 -   Then press on Create Virtual Machine
 -   Wait and... DONE !! Now hopfully Your Ubuntu has been installed successfully!
 
+*Note*: Follow steps in section "Configuring Ubuntu and VM to make...." if only `Enhanced session mode` is not working in your VM
+
 ## Configuring Ubuntu and VM to make "Enhanced Session" mode work
 -   Turn on your Ubuntu image
 -   Choose `Basic Session` from the top bar
