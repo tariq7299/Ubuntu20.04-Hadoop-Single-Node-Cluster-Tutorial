@@ -148,8 +148,8 @@ FLUSH PRIVILEGES; # Reload privileges tables
 
 ```bash   
 # Login to mysql and create user
-sudo mysql -u root -exitp
-CREATE USER 'admin'@'localhost' IDENTIFIED BY '1122';
+sudo mysql -u root
+CREATE USER 'rangeradmin'@'localhost' IDENTIFIED BY '1122';
 GRANT ALL PRIVILEGES ON *.* TO 'rangeradmin'@'localhost' WITH GRANT OPTION;
 FLUSH PRIVILEGES;
 ```  
