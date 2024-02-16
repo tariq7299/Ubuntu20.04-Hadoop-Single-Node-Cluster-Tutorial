@@ -113,7 +113,7 @@ ls target/*.tar.gz
 
 1-  First you need to install MySQL
 ``` bash
-sudo apt install mysql-server  
+sudo apt install mysql-server -Y
 sudo systemctl status mysql.service # The MySQL service should start automaticlly verify by this command
 sudo systemctl start mysql.service # If not, This will start the my sql service   
 ```   
@@ -138,9 +138,10 @@ sudo mysql_secure_installation
 ```SQL
 # log in into mysql server usin "root" user
 sudo mysql -u root
-ALTER USER 'root'@'localhost' IDENTIFIED BY 'your_new_password';
+ALTER USER 'root'@'localhost' IDENTIFIED BY '1122';
 FLUSH PRIVILEGES; # Reload privileges tables
-```
+```  
+
 *Note*: You can access the mysql server using the root user without typing any password, because `auth_socket` is enbled by default by "MySQL" and what it does that it recogizes that you accessed my sql using `root` user of the system (Linux OS), and it authenticate you automaticlly withou typing  password of `root` `MySQL` user
 
 4- Create `admin` user in mysql 
@@ -148,8 +149,8 @@ FLUSH PRIVILEGES; # Reload privileges tables
 ```bash   
 # Login to mysql and create user
 sudo mysql -u root -exitp
-CREATE USER 'admin'@'localhost' IDENTIFIED BY 'password12';
-GRANT ALL PRIVILEGES ON *.* TO 'admin'@'localhost' WITH GRANT OPTION;
+CREATE USER 'admin'@'localhost' IDENTIFIED BY '1122';
+GRANT ALL PRIVILEGES ON *.* TO 'rangeradmin'@'localhost' WITH GRANT OPTION;
 FLUSH PRIVILEGES;
 ```  
 5- Create a database for ranger  
@@ -225,9 +226,45 @@ su solr # switch to solr user
 
 ## Install Ranger Policy Admin  
 
+1- Untar the `ranger-2.4.0-admin` file
 ```bash  
 cd /usr/local  
+# Untart the file in the same dir
 sudo tar xvf ~/git/dev/ranger/target/ranger-2.4.0-admin.tar.gz  
+# This sets a symbolic link to "ranger-2.4.0-admin" so we can access the folder "ranger-2.4.0-admin" by "ranger-admin"
 sudo ln -s ranger-2.4.0-admin/ ranger-admin  
 cd /usr/local/ranger-admin/
+```    
+
+2-  Open `install.properties` via sudo  
+
+```bash  
+vim install.properties  
+```  
+
+3-  Change the following values  
+```bash  
+# Mysql root
+db_root_user=root
+db_root_password=1122
+# DB UserId used for the XASecure schema
+db_name=ranger
+db_user=admin
+db_password=1122
+# audit log
+audit_store=solr
+audit_solr_urls=http://HOST_ADDRESS:6083/solr/ranger_audits
+policymgr_external_url=http://localhost:6080
+```    
+
+4- Create a symbolic link to MySQL connector  
+```bash  
+sudo ln -s /usr/share/java/mysql-connector-java-8.0.33.jar /usr/share/java/mysql-connector-java.jar
+```  
+
+5- run setup.sh :   
+```bash
+# This sets JAVA_HOME env variable for sudo environment ! (this is necesseray)
+sudo JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64 ./setup.sh
 ```
+
