@@ -307,11 +307,52 @@ ranger-admin start
 
 8- Access `Ranger` web interface: Now you can visit `localhost:6080`, this will open up the ranger admin web interface  
 
+## Install and Configue LDAP server  
 
+1- Download `OpenLDAP` package
+```bash  
+sudo apt install -y slapd ldap-utils
 
+# You will be prompted to set a password for lDAP admin
+#1122
+```  
 
+2- Execute this to add some configurtions
+```bash   
+sudo dpkg-reconfigure slapd
+```  
+Then You will be promptes with some questions:
+- Omit OpenLDAP server configuration: No  
+- DNS domain name: example.com  
+- Organization name: example.com  
+- Password: 1122  
+- Last question: yes  
 
+3- make sure everything is working and correctly configured: `sudo slapcat`  
 
+4-  Create file base`dn` for Users and Groups  
+```bash    
+sudo mkdir /usr/local/ldap && sudo touch /usr/local/ldap/basedn.ldif  
+sudo vim /usr/local/basedn.ldif 
+```  
+Add this to the file:
+
+```YAML
+dn: ou=people,dc=example,dc=com
+objectClass: organizationalUnit
+ou: people
+
+dn: ou=groups,dc=example,dc=com
+objectClass: organizationalUnit
+ou: groups
+```
+
+5- Add the file by running
+```bash 
+ldapadd -x -D cn=admin,dc=example,dc=com -W -f basedn.ldif
+```  
+
+6- 
 
 ## Configure Ranger UserSync Plugin with LDAP  
 
