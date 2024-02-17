@@ -1,4 +1,4 @@
-# Installing And Configuring *Ranger* from [CERN Summer student Program 2023](https://cds.cern.ch/record/2872121/files/CERN%20Report%20Cl%C3%A9ment%20LUCAS.pdf)  
+# Installing And Configuring *Ranger* from [CERN Summer student Program 2023](https://cds.cern.ch/record/2872121/files/CERN%20Report%20Cl%C3%A9ment%20LUCAS.pdf)  x
 
 ## Some Prerequistes before we actually install *Ranger*    
 
@@ -109,7 +109,7 @@ sudo /usr/local/apache-maven-3.9.6/bin/mvn clean compile package install -DskipT
 ls target/*.tar.gz
 ```  
 
-## Installing MySQL   
+## Installing and Configure MySQL   
 
 1-  First you need to install MySQL
 ``` bash
@@ -171,7 +171,7 @@ sudo dpkg -i ~/Downloads/mysql-connector-j_8.0.33-1ubuntu20.04_all.deb # This wi
 ```   
 
 
-## Installing Solr  
+## Installing and Configure Solr  
 
 Solr is going to store the audit logs
 
@@ -229,7 +229,7 @@ su solr # switch to solr user
 
 8- Check for solr by accessing the web portal of `localhost:6083`
 
-## Install Ranger Policy Admin  
+## Configure Ranger Policy Admin  
 
 1- Untar the `ranger-2.4.0-admin` file
 ```bash  
@@ -258,7 +258,7 @@ db_user=admin
 db_password=1122
 # audit log
 audit_store=solr
-audit_solr_urls=http://HOST_ADDRESS:6083/solr/ranger_audits
+audit_solr_urls=http://localhost:6083/solr/ranger_audits
 policymgr_external_url=http://localhost:6080
 ```    
 
@@ -284,15 +284,28 @@ sudo JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64 ./setup.sh
 sudo JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64 ./setup.sh
 ```  
 
-6- Start `ranger`  
+6- Create necessary dir called `/var/run/ranger`
 ```bash  
+sudo mkdir /var/run/ranger  
+sudo chown ranger:ranger /var/run/ranger  
+```  
+
+7- Set password for `ranger` user
+This user was automaticcly created by ranger admin
+```bash  
+sudo passwd ranger # This will set a password to the newly created "ranger" user  
+#1122  
 su - ranger # Switch first to ranger user
 # "ranger" will be used to run ranger
 # This user has been created automaticcly by ranger setup
+```  
+
+7- Start `ranger`  
+```bash
 ranger-admin start  
 ```    
 
-7- Access `Ranger` web interface: Now you can visit `localhost:6080`, this will open up the ranger admin web interface  
+8- Access `Ranger` web interface: Now you can visit `localhost:6080`, this will open up the ranger admin web interface  
 
 
 
@@ -300,3 +313,20 @@ ranger-admin start
 
 
 
+## Configure Ranger UserSync Plugin with LDAP  
+
+1- Untar the Ranger UserSync tar file  
+```bash  
+cd /usr/local
+sudo tar xvf ~/git/dev/ranger/target/ranger-2.4.0-usersync.tar.gz
+sudo ln -s ranger-2.4.0-usersync/ ranger-usersync  # Create a symbolic link
+cd ranger-usersync
+```  
+
+2- Create necessary log dir
+```bash   
+sudo mkdir -p /var/log/ranger/usersync
+sudo chown ranger:ranger /var/log/ranger && sudo chown ranger:ranger /var/log/ranger/usersync
+```  
+
+3- 
