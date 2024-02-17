@@ -6,7 +6,7 @@
 -   Don't forget to add steps of configuring Ubuntu in VM to make Enhanced session mode work *DONE*
 -   What is Single Node Cluster ? and does it have master and slave nodes or not? *DONE*
 -   Create a second VM that will act as a slave node (DataNode), and connect in a single network
--   What is the difference between those three modes:  
+-   What is the difference between those three modes:  *DONE*
     -   Local (Standalone) Mode
     -   Pseudo-Distributed Mode
     -   Fully-Distributed Mode
@@ -16,3 +16,5 @@
 -   Organize my README:  
     -   Create three sections (README-Prerequists&Configuring VM-HadoopInstalling-RangerInstalling)
     -   Change the name of the Repo to more decisive or even create a whole two repos! (one for (Ubuntu hadoop Single node cluster) and one for (Single Node Cluster and Ranger and Ldap) )
+-   Learn how to merge checkpoints in hyper-v  
+-   
