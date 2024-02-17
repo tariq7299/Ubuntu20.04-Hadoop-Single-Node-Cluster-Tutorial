@@ -300,14 +300,14 @@ su - ranger # Switch first to ranger user
 # This user has been created automaticcly by ranger setup
 ```  
 
-7- Start `ranger`  
+8- Start `ranger`  
 ```bash
 ranger-admin start  
 ```    
 
-8- Access `Ranger` web interface: Now you can visit `localhost:6080`, this will open up the ranger admin web interface  
+9- Access `Ranger` web interface: Now you can visit `localhost:6080`, this will open up the ranger admin web interface  
 
-## Install and Configue LDAP server  
+## Guide to Setup and Configue a `LDAP` server  
 
 1- Download `OpenLDAP` package
 ```bash  
@@ -317,11 +317,11 @@ sudo apt install -y slapd ldap-utils
 #1122
 ```  
 
-2- Execute this to add some configurtions
+2- Execute this to add some configurations
 ```bash   
 sudo dpkg-reconfigure slapd
 ```  
-Then You will be promptes with some questions:
+Then You will be prompted with some questions:
 - Omit OpenLDAP server configuration: No  
 - DNS domain name: example.com  
 - Organization name: example.com  
@@ -350,12 +350,76 @@ objectClass: organizationalUnit
 ou: groups
 ```
 
-5- Add the file by running
+5- Add the file to LDAP by running
 ```bash 
+cd /usr/local/ldap
 ldapadd -x -D cn=admin,dc=example,dc=com -W -f basedn.ldif
 ```  
+Now we are done!  
+We have now configured the essentional configuration of our LDAP server to work!
 
-6- 
+6- Now lets create a user in LDAP, and add him to it, So first we need to create a "HASH" of the password of the user that will be added to LDAP  
+```bash 
+sudo slappasswd
+# Enter password two times  
+# {SSHA}fe6dvRX6trPhTn5ypSTMsUNRZztWJThz --> This will outputed  
+# copy it !
+```  
+
+7- Create `ldapusers.ldif` and add a user config values to it.
+Add a user details that actaully exists on your device   
+This is the file that is going to be used to add users to LDAP 
+```bash
+cd /usr/local/ldap
+sudo vim /usr/local/ldap/ldapusers.ldif
+```
+
+```YAML
+dn: uid=computingforgeeks,ou=people,dc=example,dc=com
+objectClass: inetOrgPerson
+objectClass: posixAccount
+objectClass: shadowAccount
+cn: computingforgeeks
+sn: Wiz
+userPassword: {SSHA}Zn4/E5f+Ork7WZF/alrpMuHHGufC3x0k # Paste the password hash you just copied
+loginShell: /bin/bash
+uidNumber: 2000
+gidNumber: 2000
+homeDirectory: /home/computingforgeeks
+```  
+
+8- Add the file `ldapusers.ldif` to LDAP that contain the user you just created  
+```bash 
+cd /usr/local/ldap  
+ldapadd -x -D cn=admin,dc=example,dc=com -W -f ldapusers.ldif 
+```
+Now we are done!!  
+We have added user `hdoop` to our `LDAP`
+
+9- Create `ldapgroups.ldif` and a group configuration values to it  
+```bash  
+cd /usr/local/ldap  
+sudo vim ldapgroups.ldif  
+```  
+Add those values to `ldapgroups.ldif` file, to add a group to LDAP called `hadoop`
+```YAML  
+dn: cn=hadoop,ou=groups,dc=example,dc=com
+objectClass: posixGroup
+cn: hadoop
+gidNumber: 2000
+memberUid: hadoop
+```
+
+10- Add the file `ldapgroups.ldif` containg the new group we just created
+```bash 
+ldapadd -x -D cn=admin,dc=example,dc=com -W -f ldapgroups.ldif
+```
+
+11- Test LDAP server to see if it is working or not  
+```bash 
+# This hopefully should display all users and groups in LDAP, with there details
+ldapsearch -x -H ldap://localhost -b "dc=example,dc=com" -D "cn=admin,dc=example,dc=com" -W
+```
 
 ## Configure Ranger UserSync Plugin with LDAP  
 
