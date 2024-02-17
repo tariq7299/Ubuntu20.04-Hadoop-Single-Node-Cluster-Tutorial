@@ -328,7 +328,10 @@ Then You will be promptes with some questions:
 - Password: 1122  
 - Last question: yes  
 
-3- make sure everything is working and correctly configured: `sudo slapcat`  
+3- make sure everything is working and correctly configured  
+ ```bash
+sudo slapcat # This will display the configuration of LDAP
+```
 
 4-  Create file base`dn` for Users and Groups  
 ```bash    
