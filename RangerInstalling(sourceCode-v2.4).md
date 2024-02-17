@@ -133,32 +133,36 @@ except for removing anynomes users removal
 sudo mysql_secure_installation
 ```    
 
-3- Change the password of the Mysql"root" user 
+3- Change the password of the Mysql"root" user and the authentication method
 
 ```SQL
 # log in into mysql server usin "root" user
 sudo mysql -u root
-ALTER USER 'root'@'localhost' IDENTIFIED BY '1122';
+# This will change the auth method from "auth_socket" to "mysql_native_password"
+ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '1122';
 FLUSH PRIVILEGES; # Reload privileges tables
 ```  
 
-*Note*: You can access the mysql server using the root user without typing any password, because `auth_socket` is enbled by default by "MySQL" and what it does that it recogizes that you accessed my sql using `root` user of the system (Linux OS), and it authenticate you automaticlly withou typing  password of `root` `MySQL` user
+*Note*: You can access the mysql server using the root user without typing any password, because `auth_socket` is enbled by default by "MySQL" and what it does that it recogizes that you accessed my sql using `root` user of the system (Linux OS), and it authenticate you automaticlly withou typing  password of `root` `MySQL` user.  
+But In order for `Ranger` to be setup and configure appropriatly we have to change this auth method for mysql users from `auth_socket` to `mysql_native_password`  
 
-4- Create `admin` user in mysql 
+4- Create `rangeradmin` user in mysql, and change the default auth method
 
-```bash   
+```sql   
 # Login to mysql and create user
-sudo mysql -u root
-CREATE USER 'rangeradmin'@'localhost' IDENTIFIED BY '1122';
+sudo mysql -u root -p
+# This will creat user, change the default auth method and finally set a password
+CREATE USER 'rangeradmin'@'localhost' IDENTIFIED WITH mysql_native_password BY '1122';
 GRANT ALL PRIVILEGES ON *.* TO 'rangeradmin'@'localhost' WITH GRANT OPTION;
 FLUSH PRIVILEGES;
-```  
+```    
+
 5- Create a database for ranger  
 ```sql
 CREATE DATABASE ranger; 
 ```
 
-3-  Download the MySQL JDBC, and then untarit, then finally copy the .jar file to a common location where everyone be abel to access it.
+6-  Download the MySQL JDBC, and then untarit, then finally copy the .jar file to a common location where everyone be abel to access it.
 
 ``` bash  
 # This will download the appropriate MySQL JDBC packge for Ubuntu 20.04 LTS
@@ -175,7 +179,7 @@ Solr is going to store the audit logs
 
 2- Edit the setup file of solr, and configure this variables 
 ```bash  
-vim install.properties
+sudo vim install.properties
 ```
 
 ```bash
@@ -200,18 +204,19 @@ So I had to use the older format of the older solr versions url `https://archive
 ```bash
 sudo mkdir -p /opt/solr/ranger_audit_server/data
 ;sudo mkdir -p /var/log/solr/ranger_audits
-```
-4- Create new user named `solr` 
-This user will be used to start solr servic (this necessary becasue by default after you run `setup.sh` all the folders and files that will be created will belong to `solr` user)
-```bash
-sudo useradd solr   
-sudo passwd solr
 ```  
 
-5- Run the `.setup.sh` file  
+4- Run the `.setup.sh` file  
 ```bash
 sudo ./setup.sh
 ```  
+
+5- Set a password for `Solr` that was just created 
+```bash
+sudo passwd solr
+# 1122
+```
+*Note*: This user will be used to start solr servic (this necessary becasue by default after you run `setup.sh` all the folders and files that will be created will belong to `solr` user)
 
 6- You can open  `/opt/solr/ranger_audit_server/install_notes.txt`  for instructions to start and stop `Solr`
 
@@ -239,7 +244,7 @@ cd /usr/local/ranger-admin/
 2-  Open `install.properties` via sudo  
 
 ```bash  
-vim install.properties  
+sudo vim install.properties  
 ```  
 
 3-  Change the following values  
@@ -259,12 +264,39 @@ policymgr_external_url=http://localhost:6080
 
 4- Create a symbolic link to MySQL connector  
 ```bash  
+# This is necessary because ranger admin setup depend on the existins and location of this symbolic link
 sudo ln -s /usr/share/java/mysql-connector-java-8.0.33.jar /usr/share/java/mysql-connector-java.jar
 ```  
 
 5- run setup.sh :   
 ```bash
 # This sets JAVA_HOME env variable for sudo environment ! (this is necesseray)
+# And you hava to set the java home to be a JDK 8 !!
+# I have tried to use JDK 11 and it worked !?
+# So use JDK 8 or JDK 11 ! I think it suppose to be 8 or heigher !
 sudo JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64 ./setup.sh
 ```
+
+*OR*  
+
+```bash
+# Or like I said you can use JDK 11
+sudo JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64 ./setup.sh
+```  
+
+6- Start `ranger`  
+```bash  
+su - ranger # Switch first to ranger user
+# "ranger" will be used to run ranger
+# This user has been created automaticcly by ranger setup
+ranger-admin start  
+```    
+
+7- Access `Ranger` web interface: Now you can visit `localhost:6080`, this will open up the ranger admin web interface  
+
+
+
+
+
+
 
