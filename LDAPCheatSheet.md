@@ -26,6 +26,7 @@ Certainly! Here's a list of common acronyms and commands related to **LDAP (Ligh
    - **URL**: Uniform Resource Locator
    - **SAM**: Security Account Manager
    - **SASL**: Simple Authentication and Security Layer
+   - **MDB**: Memory-Mapped Database
 
 2. **Common Commands**:
    - `ldapsearch`: Search for entries in the LDAP directory.
