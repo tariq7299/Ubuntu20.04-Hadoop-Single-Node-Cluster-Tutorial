@@ -421,6 +421,11 @@ ldapadd -x -D cn=admin,dc=example,dc=com -W -f ldapgroups.ldif
 ldapsearch -x -H ldap://localhost -b "dc=example,dc=com" -D "cn=admin,dc=example,dc=com" -W
 ```
 
+*OR*   
+
+You can replace this `-H ldap://localhost` with `-H ldapi:///`  
+This `ldapi:///` means that the "LDAP" server is running on the same machine or within the same network.
+
 ## Configure Ranger UserSync Plugin with LDAP  
 
 1- Untar the Ranger UserSync tar file  
