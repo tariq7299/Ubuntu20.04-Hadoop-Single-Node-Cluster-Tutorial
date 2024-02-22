@@ -164,7 +164,7 @@ su - hdoop
 
 ## Setup SSH keys
 -   Craete ssh key pair: `ssh-keygen -t rsa -P '' -f ~/.ssh/id_rsa`  
--   Copy the public key to "authorized_keys" file
+-   Copy the public key to "authorized_keys" file `cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys`
 -   Change some permissions:  
 ``` bash
 chmod 600 ~/.ssh/authorized_keys
@@ -174,13 +174,14 @@ ssh localhost # This will just check if ssh is correctly installed and configure
 ```  
 
 ##  Download and install Hadoop
--   Download hadoop: `wget https://downloads.apache.org/hadoop/common/hadoop-3.3.6/hadoop-3.3.6.tar.gz`
+-   Download hadoop: `wget -P ~/Downloads https://downloads.apache.org/hadoop/common/hadoop-3.3.6/hadoop-3.3.6.tar.gz`
 -   Finish the exctraction and installing by running the following commands: 
 ```   bash
- tar xzf hadoop-3.3.6.tar.gz  
+ tar xzf ~/Downloads/hadoop-3.3.6.tar.gz  -C `
  sudo mv hadoop-3.3.6 /usr/local/hadoop  
  sudo chown -R hdoop:hdoop /usr/local/hadoop
-``` 
+```   
+
 ## Configure Hadoop Environment   
 -   Run this command to set the "JAVA_HOME" env variable: `echo 'export JAVA_HOME=$(readlink -f /usr/bin/java | sed "s:bin/java::")' | sudo tee -a /usr/local/hadoop/etc/hadoop/hadoop-env.sh`  
 
@@ -257,7 +258,8 @@ This is some basic configuration for "mapred-site.xml" file:
 ``` bash
 # This will display the logs of "namenode"
 cat /usr/local/hadoop/logs/hadoop-hdoop-namenode-tariq-Virtual-Machine.log 
-```
+```  
+
 ## Start Hadoop Services  
 Launch HDFS: `/usr/local/hadoop/sbin/start-dfs.sh`  
 Launch YARN: `/usr/local/hadoop/sbin/start-yarn.sh`  
@@ -272,6 +274,7 @@ NameNode: http://localhost:9870
 ResourceManager: http://localhost:8088  
 
 &nbsp;
+  
 
 # Lets test our Hadoop  
 
