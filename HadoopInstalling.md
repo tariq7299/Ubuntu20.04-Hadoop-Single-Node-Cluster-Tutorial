@@ -1,6 +1,110 @@
 # **This a step by step guide of setting up an `Ubuntu` `Virtual Machine` and installing and configuring `Hadoop` (_Single-Node Cluster_) on it**
 
-# VM setup on Windows 10
+# VM setup on mac (Apple Silicon)
+**NOTE** If you are using Windows, go to *VM setup on Windows*  
+
+1-  Download *VMware player* from this link [Download VMware Player](https://customerconnect.vmware.com/en/evalcenter?p=fusion-player-personal-13)  
+But you have to create an account first !  
+
+2-  Install it  
+
+3-  Download *Ubuntu 22.04 LTS-server* *.iso* file from this link [Download Ubuntu 22.04 arm64](https://ubuntu.com/download/server/arm)(this a compatible version with apple silicon)  
+
+4-  Press the `+` sign on the top left  then `New`  
+
+5-  Drag your `.iso` file then press `continue`
+
+6-  Press `Customize Settings` then choose a location  
+
+7-  Press `Processors & Memory` then choose `4 processor cores`  
+
+8-  Press on `Hard Disk` then expand it to 50 GB, then click `apply`  
+
+9-  Then exit this settings window and then click on the play button  
+
+10- Then let it load then choose the language  
+
+11- Press `Continue without updating`
+
+12- Press `Done`  
+
+13- Choose `Ubuntu Server` then `Done`  
+
+14- Choose `ens160` then click `Done`  
+
+15- Don't type anything in proxy addess, and just click on `Done`  
+
+16- Click `Done` again  
+
+17- Click `Done`again  
+
+18- In `Storage configuration` we want to resize the filesystem drive to take the whole 50 GB, we have allocated to this VM:
+    -   Under `FILE SYSTEM SUMMARY` `Unmount` `/` 
+    -   Then under `USED DEVICES` click on `ubuntu 22.04....` and click `Delete`  
+    -   Then click on `free space` and then create a new logincal drive using all of the available space  
+
+19- Then type your info  then `Done`  
+
+20- Skip installing ubuntu pro and then Click `Done`  
+
+21- Don't Choose `Install OpenSSh server` then click `Done`  
+
+22- Then it will install the OS then click `Reboot now`
+
+23- Then execute this
+```bash
+sudo apt -y update && sudo apt -y upgrade  
+```
+23- FINISHED !
+
+## Setup XRDP (Remote Desktop Protocol)  
+This is necessary to make copy paste work between the Guest os and the host, as I have tried to make this work through VMware fusion player only and it faild !, and I think because i have an apple silicon device  
+
+1-  Install some necessary packages to make remote desktop work `sudo apt install -y vim net-tools openssh-server xrdp`
+
+2-  This will enable xrdp on ubuntu `sudo systemctl enable --now xrdp`  
+
+3-  To make things easier, lets assign a static IP to our Ubuntu 
+```bash
+# This to know your network interface
+# It will be somthing like this "ens160"
+ip link
+cd /etc/netplan  
+sudo vim 00-installer-config.yaml
+```  
+Then add the following configuration  
+```YAML
+# This is the network config written by 'subiquity'
+network:
+  version: 2
+  renderer: networkd # Add this if you are using the server edition and not the desktop edition of ubuntu
+  ethernets:
+    ens160:
+      dhcp4: false
+      addresses: [192.168.1.50/24] # The desired static ip address
+      gateway4: 192.168.1.1 # Default gatway
+      nameservers:
+        addresses: [8.8.8.8, 8.8.4.4] # DNS server address
+```
+```bash
+sudo netplan apply
+
+if config # Check that the ip address has changed !
+```
+3-  Download *xrdp* from app store on mac
+
+
+4-  Now lets connect using the *xrdp*, open *xrdp* app  mac and then click on the plus sign
+
+5-  Then click on `Add PC`
+
+6- Type in the host name or your static ip address of the ubuntu VM  device  in `PC name` field then click `add`
+
+7-  Then click the window of the new device you just added, then connect to it using your username and password
+
+
+# VM setup on Windows
+
 
 ## Creating Ubuntu image and setting up VM using Hyber-V
 -   Search for "Hyber-V" using windows search bar
