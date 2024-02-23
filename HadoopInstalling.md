@@ -228,10 +228,16 @@ ssh localhost # This will just check if ssh is correctly installed and configure
 
 ##  Download and install Hadoop
 -   First switch to 'tariq' super user `su - tariq`
--   Download hadoop: `wget -P ~/Downloads https://downloads.apache.org/hadoop/common/hadoop-3.3.6/hadoop-3.3.6.tar.gz`
--   Finish the exctraction and installing by running the following commands: 
+-   Download hadoop:
+ ```
+ # This is for Windows hosts
+ wget -P ~/Downloads https://downloads.apache.org/hadoop/common/hadoop-3.3.6/hadoop-3.3.6.tar.gz
+
+ # This is for Apple silicon Mac devices (arm64)
+ wget -P ~/Downloads https://dlcdn.apache.org/hadoop/common/hadoop-3.3.6/hadoop-3.3.6-aarch64.tar.gz
+```
+-   Finish the exctraction and insy running the following commands: 
 ```   bash
-sudo mkdir /usr/local/hadoop
 sudo tar xzf ~/Downloads/hadoop-3.3.6.tar.gz -C ~/Downloads
 sudo mv ~/Downloads/hadoop-3.3.6 /usr/local/hadoop # This will change the folder name from hadoop-3.3.6 to hadoop
 sudo chown -R hdoop:hdoop /usr/local/hadoop
@@ -279,6 +285,12 @@ This is some basic configuration for "hdfs-site.xml" file:
         <name>dfs.datanode.data.dir</name>
         <value>file:/home/hdoop/hdfs/datanode</value>
     </property>
+
+    <property>
+        <name>dfs.secondary.http.address</name>
+        <value>localhost:50090</value>
+        <description>Secondary NameNode Hostname</description>
+    </property>
 ```
 
 This is some basic configuration for "mapred-site.xml" file: 
@@ -288,13 +300,12 @@ This is some basic configuration for "mapred-site.xml" file:
         <name>mapreduce.cluster.local.dir</name>
         <value>/data/hdfs/tmp/mapred/local</value>
     </property>
-
-
 ```
 *Note*: You have to manually create any directory you wrote in the `.xml` files, and maybe also assign the ownership of them to correct user!
 
 --> for example:  
 ``` bash
+    su - tariq # Switch first to tariq
     sudo mkdir -p /data/hdfs/tmp/mapred/local
     sudo mkdir -p /home/hdoop/hdfs/namenode
     sudo mkdir -p /home/hdoop/hdfs/datanode  

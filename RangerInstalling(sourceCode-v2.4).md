@@ -145,7 +145,7 @@ ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '1122';
 FLUSH PRIVILEGES; # Reload privileges tables
 ```  
 
-*Note*: You can access the mysql server using the root user without typing any password, because `auth_socket` is enbled by default by "MySQL" and what it does that it recogizes that you accessed my sql using `root` user of the system (Linux OS), and it authenticate you automaticlly withou typing  password of `root` `MySQL` user.  
+**NOTE**: You can access the mysql server using the root user without typing any password, because `auth_socket` is enbled by default by "MySQL" and what it does that it recogizes that you accessed my sql using `root` user of the system (Linux OS), and it authenticate you automaticlly withou typing  password of `root` `MySQL` user.  
 But In order for `Ranger` to be setup and configure appropriatly we have to change this auth method for mysql users from `auth_socket` to `mysql_native_password`  
 
 4- Create `rangeradmin` user in mysql, and change the default auth method
@@ -169,6 +169,7 @@ CREATE DATABASE ranger;
 ``` bash  
 # This will download the appropriate MySQL JDBC packge for Ubuntu 20.04 LTS
 wget -P ~/Downloads https://downloads.mysql.com/archives/get/p/3/file/mysql-connector-j_8.0.33-1ubuntu20.04_all.deb
+
 sudo dpkg -i ~/Downloads/mysql-connector-j_8.0.33-1ubuntu20.04_all.deb # This will install the .deb package
 ```   
 
@@ -204,8 +205,7 @@ So I had to use the older format of the older solr versions url `https://archive
 
 3- Create some necesseray dir for solr
 ```bash
-sudo mkdir -p /opt/solr/ranger_audit_server/data
-;sudo mkdir -p /var/log/solr/ranger_audits
+sudo mkdir -p /opt/solr/ranger_audit_server/data;sudo mkdir -p /var/log/solr/ranger_audits
 ```  
 
 4- Run the `.setup.sh` file  
@@ -218,7 +218,7 @@ sudo ./setup.sh
 sudo passwd solr
 # 1122
 ```
-*Note*: This user will be used to start solr servic (this necessary becasue by default after you run `setup.sh` all the folders and files that will be created will belong to `solr` user)
+*Note*: This user will be used to start solr servic (this necessary becasue by default after you run `setup.sh` allsu  the folders and files that will be created will belong to `solr` user)
 
 6- You can open  `/opt/solr/ranger_audit_server/install_notes.txt`  for instructions to start and stop `Solr`
 
