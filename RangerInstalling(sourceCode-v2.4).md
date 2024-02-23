@@ -115,7 +115,9 @@ ls target/*.tar.gz
 ``` bash
 sudo apt install -y mysql-server
 sudo systemctl status mysql.service # The MySQL service should start automaticlly verify by this command
-sudo systemctl start mysql.service # If not, This will start the my sql service   
+
+# If not, This will start the my sql service 
+# sudo systemctl start mysql.service 
 ```   
 
 2-  Configure security installation

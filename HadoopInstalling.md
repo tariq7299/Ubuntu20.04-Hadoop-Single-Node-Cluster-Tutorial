@@ -227,13 +227,13 @@ ssh localhost # This will just check if ssh is correctly installed and configure
 ```  
 
 ##  Download and install Hadoop
+-   First switch to 'tariq' super user `su - tariq`
 -   Download hadoop: `wget -P ~/Downloads https://downloads.apache.org/hadoop/common/hadoop-3.3.6/hadoop-3.3.6.tar.gz`
 -   Finish the exctraction and installing by running the following commands: 
 ```   bash
-su - tariq
 sudo mkdir /usr/local/hadoop
-sudo tar xzf ~/home/hdoop/Downloads/hadoop-3.3.6.tar.gz  -C /usr/local/
-sudo mv /usr/local/hadoop-3.3.6 /usr/local/hadoop # This will change the folder name from hadoop-3.3.6 to hadoop
+sudo tar xzf ~/Downloads/hadoop-3.3.6.tar.gz -C ~/Downloads
+sudo mv ~/Downloads/hadoop-3.3.6 /usr/local/hadoop # This will change the folder name from hadoop-3.3.6 to hadoop
 sudo chown -R hdoop:hdoop /usr/local/hadoop
 ```   
 
