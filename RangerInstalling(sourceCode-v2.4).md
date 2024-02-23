@@ -15,7 +15,7 @@ If it is not installed then run this:
 
 ```bash   
 sudo apt install openjdk-11-jdk -y  
-export JAVA_HOME=/usr/lib/jvm/java-1.11.0-openjdk-amd64  
+export JAVA_HOME=/usr/lib/jvm/java-1.11.0-openjdk-amd64/
 ```  
 
 *Note*: If you have another version installed already and you don't want to remove it do this:  
@@ -76,14 +76,14 @@ sudo apt install git
 ### Install GCC  
 
 ```bash   
-sudo apt install gcc
+sudo apt install -y gcc
 ```  
 
 ## Install And Build Ranger from the source
 
 1-  Clone the ranger source code  
 ``` bash  
-mkdir ~/git/dev  
+mkdir -p ~/git/dev
 cd ~/git/dev
 sudo git clone https://github.com/apache/ranger.git
 cd ranger 
@@ -99,7 +99,7 @@ git checkout tags/release-ranger-2.4.0 -b ranger-2.4
 # "-Dassembly.plugin.version=3.1.0 -Dhadoop.version=3.3.0 -Dhbase.version=2.3.4 -Dzookeeper.version=3.6.1 -Dhive.version=3.0.0 -Dmysql-connector-java.version=8.0.28" This is just specifying some versions of the other Apache components
 # "'!plugin-ozone, !plugin-solr, !plugin-nifi, !plugin-nifi-registry, !plugin-kudu, !plugin-kms, !ranger-ozone-plugin-shim, !storm-agent, !ranger-storm-plugin-shim, !ranger-solr-plugin-shim, !ranger-atlas-plugin-shim, !plugin-atlas, !plugin-kylin, !ranger-kylin-plugin-shim'" This disables those plugins completely, because we don't need them
 
-sudo /usr/local/apache-maven-3.9.6/bin/mvn clean compile package install -DskipTests=true -Dspotbugs.skip=true -Dchkstyle.skip=true -Dassembly.plugin.version=3.1.0 -Dhadoop.version=3.3.0 -Dhbase.version=2.3.4 -Dzookeeper.version=3.6.1 -Dhive.version=3.0.0 -Dmysql-connector-java.version=8.0.33 -pl '!plugin-ozone, !plugin-solr, !plugin-nifi, !plugin-nifi-registry, !plugin-kudu, !plugin-kms, !ranger-ozone-plugin-shim, !storm-agent, !ranger-storm-plugin-shim, !ranger-solr-plugin-shim, !ranger-atlas-plugin-shim, !plugin-atlas, !plugin-kylin, !ranger-kylin-plugin-shim'
+sudo /usr/local/maven/apache-maven-3.9.6/bin/mvn clean compile package install -DskipTests=true -Dspotbugs.skip=true -Dchkstyle.skip=true -Dassembly.plugin.version=3.1.0 -Dhadoop.version=3.3.6 -Dhbase.version=2.3.4 -Dzookeeper.version=3.6.1 -Dhive.version=3.0.0 -Dmysql-connector-java.version=8.0.33 -pl '!plugin-ozone, !plugin-solr, !plugin-nifi, !plugin-nifi-registry, !plugin-kudu, !plugin-kms, !ranger-ozone-plugin-shim, !storm-agent, !ranger-storm-plugin-shim, !ranger-solr-plugin-shim, !ranger-atlas-plugin-shim, !plugin-atlas, !plugin-kylin, !ranger-kylin-plugin-shim'
 ```  
 
 
@@ -113,7 +113,7 @@ ls target/*.tar.gz
 
 1-  First you need to install MySQL
 ``` bash
-sudo apt install mysql-server -Y
+sudo apt install -y mysql-server
 sudo systemctl status mysql.service # The MySQL service should start automaticlly verify by this command
 sudo systemctl start mysql.service # If not, This will start the my sql service   
 ```   

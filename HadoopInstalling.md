@@ -177,13 +177,17 @@ ssh localhost # This will just check if ssh is correctly installed and configure
 -   Download hadoop: `wget -P ~/Downloads https://downloads.apache.org/hadoop/common/hadoop-3.3.6/hadoop-3.3.6.tar.gz`
 -   Finish the exctraction and installing by running the following commands: 
 ```   bash
- tar xzf ~/Downloads/hadoop-3.3.6.tar.gz  -C `
- sudo mv hadoop-3.3.6 /usr/local/hadoop  
- sudo chown -R hdoop:hdoop /usr/local/hadoop
+su - tariq
+sudo mkdir /usr/local/hadoop
+sudo tar xzf ~/home/hdoop/Downloads/hadoop-3.3.6.tar.gz  -C /usr/local/
+sudo mv /usr/local/hadoop-3.3.6 /usr/local/hadoop # This will change the folder name from hadoop-3.3.6 to hadoop
+sudo chown -R hdoop:hdoop /usr/local/hadoop
 ```   
 
 ## Configure Hadoop Environment   
--   Run this command to set the "JAVA_HOME" env variable: `echo 'export JAVA_HOME=$(readlink -f /usr/bin/java | sed "s:bin/java::")' | sudo tee -a /usr/local/hadoop/etc/hadoop/hadoop-env.sh`  
+-   First you need to switch to hdoop usr `su - hdoop`
+
+-   Run this command to set the "JAVA_HOME" env variable: `echo 'export JAVA_HOME=$(readlink -f /usr/bin/java | sed "s:bin/java::")' | tee -a /usr/local/hadoop/etc/hadoop/hadoop-env.sh`  
 
 ##  Edit Configuration Files
 -   Add your cluster configurations in "core-site.xml" file: `nano /usr/local/hadoop/etc/hadoop/core-site.xml`  
@@ -215,12 +219,12 @@ This is some basic configuration for "hdfs-site.xml" file:
 
     <property>
         <name>dfs.namenode.name.dir</name>
-        <value>file:/home/hadoop/hdfs/namenode</value>
+        <value>file:/home/hdoop/hdfs/namenode</value>
     </property>
 
     <property>
         <name>dfs.datanode.data.dir</name>
-        <value>file:/home/hadoop/hdfs/datanode</value>
+        <value>file:/home/hdoop/hdfs/datanode</value>
     </property>
 ```
 
@@ -238,19 +242,27 @@ This is some basic configuration for "mapred-site.xml" file:
 
 --> for example:  
 ``` bash
-    sudo mkdir -p /data/hdfs/tmp
-    sudo mkdir -p /home/hadoop/hdfs/namenode
-    sudo mkdir -p /home/hadoop/hdfs/datanode  
+    sudo mkdir -p /data/hdfs/tmp/mapred/local
+    sudo mkdir -p /home/hdoop/hdfs/namenode
+    sudo mkdir -p /home/hdoop/hdfs/datanode  
 
     # And then change there ownership to the "hdoop" user we created above  
     sudo chown -R hdoop:hdoop /data/hdfs/tmp
-    sudo chown -R hdoop:hdoop /home/hadoop/hdfs
+    sudo chown -R hdoop:hdoop /home/hdoop/hdfs
     sudo chown -R hdoop:hdoop /data/hdfs/tmp/mapred/
     sudo chown -R hdoop:hdoop /data/hdfs/tmp/mapred/local
 ```
 
 ## Format HDFS  
-`/usr/local/hadoop/bin/hdfs namenode -format`  
+```bash
+su - hdoop
+
+# This sets the java home permenently, in bashrc file of user "hdoop"
+echo 'export JAVA_HOME=$(readlink -f `which java` | sed "s:/bin/java::")' >> ~/.bashrc
+source ~/.bashrc 
+
+/usr/local/hadoop/bin/hdfs namenode -format
+```
 
 *Note*:   Note that you can look through the log files to, if any thing went wrong, or you trying to solve a specific problem  
 
