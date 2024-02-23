@@ -2,6 +2,10 @@
 
 # VM setup on mac (Apple Silicon)
 **NOTE** If you are using Windows, go to *VM setup on Windows*  
+**NOTE** The only availble Ubuntu releases prior to 23.04 for apple silicon mac book devices is server editions only !, and we need desktop editions for our setup, so we got two valid options:
+    -A  Install any Ubuntu arm64 desktop edition later than 22.04
+    -B  Install Ubunutu arm64 server edition prior to 23.04 and then convert it to desktop edition
+And we have choose option *B* in our guide!
 
 1-  Download *VMware player* from this link [Download VMware Player](https://customerconnect.vmware.com/en/evalcenter?p=fusion-player-personal-13)  
 But you have to create an account first !  
@@ -55,10 +59,59 @@ But you have to create an account first !
 ```bash
 sudo apt -y update && sudo apt -y upgrade  
 ```
-23- FINISHED !
+24- FINISHED !
+
+## Convert arm64 Ubuntu 22.04 LTS server edition to desktop edition 
+
+1.  Install Ubuntu desktop package: `sudo apt install ubuntu-desktop`  
+
+2.  Install open-vm-tools-desktop package `sudo apt install open-vm-tools-desktop`  
+
+3.  Install Ubuntu Software from the Snap store `sudo snap install snap-store`  
+
+4.  Disable the use of `systemd-networkd` and replces it by `NetworkManager`
+**NOTE** This is necessary because Ubuntu desktop edition and some of its apps and services uses `NetworkManager`
+```bash
+sudo systemctl disable systemd-networkd.service
+sudo systemctl mask systemd-networkd.service
+sudo systemctl stop systemd-networkd.service
+```
+5.  Save a copy of the .yaml file found inside the /etc/netplan directory `cp /etc/netplan/*.yaml ./`  
+
+6.  Edit the .yaml file found inside the /etc/netplan directory (there should be only one, and its name may vary between Ubuntu releases). Use the editor of your choice; you will need to execute the editor with sudo as the .yaml file is owned by root. 
+```bash
+# Example using vim text editor
+cd /etc/netplan
+sudo vim 00-installer-config.yaml
+``` 
+
+7.  Replace the entire contents of the .yaml file with the following:
+```YAML
+network:
+version: 2
+renderer: NetworkManager
+```
+
+8.  Set the system to use NetworkManager for networking management.
+```bash
+sudo netplan generate
+sudo systemctl unmask NetworkManager
+sudo systemctl enable NetworkManager
+sudo systemctl start NetworkManager
+```
+
+10.  Update boot files `sudo update-initramfs -u -k all`
+
+11. Reboot the VM
+```bash
+sudo systemctl reboot
+#Upon reboot, the VM should display a graphical login. Logging in will now start a graphical session
+```  
 
 ## Setup XRDP (Remote Desktop Protocol)  
 This is necessary to make copy paste work between the Guest os and the host, as I have tried to make this work through VMware fusion player only and it faild !, and I think because i have an apple silicon device  
+
+**NOTE**   You don't have to actually enable XRDP   as i have descovered later that copy paste from/to VM, will work fine after you convert your Ubunutu server to desktop !!!
 
 1-  Install some necessary packages to make remote desktop work `sudo apt install -y vim net-tools openssh-server xrdp`
 
