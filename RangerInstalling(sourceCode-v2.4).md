@@ -274,7 +274,13 @@ db_password=1122
 # audit log
 audit_store=solr
 audit_solr_urls=http://localhost:6083/solr/ranger_audits
+audit_solr_user=solr
+# UNIX User CONFIG
+unix_user_pwd=1122
+
+# POLICYMANAGER CONFIG
 policymgr_external_url=http://localhost:6080
+
 ```    
 
 4- Create a symbolic link to MySQL connector  
