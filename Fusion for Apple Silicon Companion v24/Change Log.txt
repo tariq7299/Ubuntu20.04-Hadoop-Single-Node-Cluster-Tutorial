@@ -1,0 +1,369 @@
+Change log
+
+----------------------------------------
+Version 20 	17-August-2023
+----------------------------------------
+
+Updated to reflect release of Ubuntu 22.04.3
+
+Addition of instructions for use of CrystalFetch (from the makers of UTM)
+for download of Windows 11 ARM ISO media.
+
+Re-introduction of instructions for use of Windows Insider VHDX files at the
+request of the community.
+
+Added a reminder that Fusion does not supply guest operating system installation
+media.
+
+----------------------------------------
+Version 19 	01-July-2023
+----------------------------------------
+
+Addition of topics for Arch Linux and Gentoo.
+
+The latest version 4.0 of the ISO build utility w11arm_esd2iso now interactively prompts 
+the user for the ISO type and language options.  This new version should simply the 
+ISO build process. The instructions contained in the Companion to build ISOs from 
+Microsoft ESDs have been updated to reflect the new version of the utility..
+
+Moved topic for KDE resolution resizing to Archived Topics.
+
+Added a procedure provided by the community for manually converting a Parallels 
+Linux VM to Fusion.
+
+----------------------------------------
+Version 18 	16-June-2023
+----------------------------------------
+
+Inclusion of warning on use of Fusion 13 on beta versions of macOS Sonoma.
+
+Updated references to Debian 12 and OpenSUSE Leap 15.5 as both are now released 
+versions.
+
+Added link to a fix for stuttering sound in Linux virtual machines.
+
+Included discussion on in-place upgrade of Debian 11 to Debian 12.
+
+Ubuntu has fixed the blank console issues for 22.10. The workarounds for this issue
+have been removed as upgrading to the latest kernel will fix the issue.
+
+Restored links to Ubuntu Desktop 22.04.2 daily builds as Ubuntu has fixed the issues.
+
+Added Ubuntu 23.10 to list of compatible distributions.
+
+Added warning that 23.10 Desktop daily builds can not be used as Canonical has a
+build issue in arm64 distributions that prevents login to the live environment.
+
+Enhanced instructions for building the Windows 11 ARM ISO from ESD to handle the case
+where a browser may automatically extract the w11arm_esd2iso zip file.
+
+Enhanced instructions for Windows 11 ARM installation. Clarified that the mount of
+the VMware Tools ISO will not display any confirmations in the VM that the mount
+has occurred. 
+
+Removed document from the web site that contains deprecated instructions for building
+Windows 11 ARM ISOs from uupdump.net to eliminate confusion.
+
+Miscellaneous rewording of some topics to make them clearer.
+
+----------------------------------------
+Version 17 	19-May-2023
+----------------------------------------
+
+Updated procedures for ISO creation from Microsoft ESD for version 3.0 of w11arm_esd2iso. 
+Users are no longer required to install open-source utilities, MacPorts/Homebrew or Xcode.
+
+Appendix B and Appendix C have been removed since user installation of
+open-source utilities are no longer required. 
+
+Added section on where to find VMware Fusion product documentation.
+
+Added section for a VMware KB article that describes guest OS 
+requirements for Fusion on Apple Silicon.
+
+Removed section that described kernel issues with Tumbleweed updates.
+This issue has been fixed for some time now, and users are unlikely to 
+encounter it.
+
+Added section on how to fix errors encountered while installing the iCloud app from 
+Microsoft Store on Windows 11 ARM.
+
+Procedure for installing Fedora 36 from ISO has been moved to Appendix B
+as Fedora 36 is now End of Life.
+
+Minor change to Windows 11 ARM installation procedure, eliminating the
+reboot of the VM while installing VMware drivers.
+
+Update on ETA of fix for Ubuntu 22.10 kernel issues.
+
+----------------------------------------
+Version 16 	20-Apr-2023
+----------------------------------------
+
+Updated to reflect the official release of Ubuntu 23.04 "Lunar Lobster".
+
+Updated to reflect the official release of Fedora 38.
+
+Added new section for Oracle Linux.
+
+Moved Archived Topics section to a new Appendix D.
+
+----------------------------------------
+Version 15 	05-Apr-2023
+----------------------------------------
+
+Updated to reflect the beta release of Ubuntu 23.04 Lunar Lobster".
+
+Correction to command in step 6B of the procedure to recover from 
+installation of Ubuntu kernel 5.19.0-31.
+
+Strengthening the warnings that Windows 11 ISOs downloaded directly from 
+Microsoft will not work to build a VM on Apple Silicon.
+
+Update of URL for walk-through video of Windows 11 installation.
+
+Addition of warning that the Windows 11 ISO build procedure in section 12.4 works on macOS 
+only.
+
+----------------------------------------
+Version 14 	22-Mar-2023
+----------------------------------------
+
+Removal of download link to Ubuntu Desktop 22.10 daily builds. Ubuntu's broken 5.19 kernel 
+now extends to that release.
+
+Inclusion of warnings not to use Ubuntu HWE kernels for 22.04.2. Again, that kernel is 
+broken.
+
+Ubuntu 22.10 latest kernels are still broken. 
+
+Addition of a link to an excellent video documenting the entire Windows 11 ARM download 
+and installation process based on the content in the Companion Guide. It's worth a watch.
+
+Updating of guidance for configuring printers both Windows and Linux VMs when using NAT 
+networking.
+
+----------------------------------------
+Version 13 	15-Mar-2023
+----------------------------------------
+
+Removal of Appendix D containing the Windows 11 language tags. This information can now be
+found using the w11arm_esd2iso tool.
+
+Addition of Fedora 38 beta to list of known good Linux distributions.
+Removal of references to Fedora 35 as it is considered EOL by the Fedora Project.
+
+Addition of EOL information for Fedora 36.
+
+Fixing of minor typos.
+
+Ubuntu 22.10 is still broken - no fix from Canonical yet.
+
+----------------------------------------
+Version 12 	02-Mar-2023
+----------------------------------------
+
+Heavily revised with new recommended procedures for building ISOs for Windows 11 ARM. The 
+new procedures use a newly developed script to download Windows 11 ARM ESDs from Microsoft 
+and build an installation ISO from it. These procedures should make ISO creation easier, 
+faster, and more reliable than the uupdump procedures.
+
+Removal of all instructions for building ISOs from uupdump.net These procedures considered 
+obsolete with the introduction of the new script. The procedures are still available in 
+Version 11 of this Guide which remains available on the VMware Fusion Documents forum.
+
+Removal of all instructions for building VMs using Windows Insider Preview VHDX files. 
+These procedures are considered obsolete due to Microsoft not updating the Insider 
+Preview VHDX files, and the introduction of the new script to build ISO files. These 
+procedures can still be found in Version 11 of this Guide which remains available on the 
+VMware Fusion Documents forum.
+
+Appendix B and C now include instructions on how to install Homebrew and MacPorts 
+respectively.
+
+----------------------------------------
+Version 11 	25-Feb-2023
+----------------------------------------
+
+Updated to reflect the availability of cabextract version 1.11 which fixes the issues 
+encountered by Homebrew users when building ISOs from uupdump.net
+
+Corrected backout instructions for manual installation of cabextract 1.9.1 from sources 
+in Appendix D.
+
+----------------------------------------
+Version 10 	22-Feb-2023
+----------------------------------------
+
+Re-worded section 2.4 to more clearly indicate that Fusion 13 does not run Intel VMs. 
+Added users with existing VMs on Intel Macs as a user base impacted by this.
+
+Added a procedure to "convert" an Ubuntu Server installation into the equivalent of an 
+Ubuntu Desktop.
+
+Re-verified links to Ubuntu downloads.
+
+For Windows 11 ARM, in General Notes re-stated and emphasized a recommendation to install 
+from ISO rather than using Windows Insider VHDX.
+
+Document restructuring: Separated the sections about obtaining Windows 11 ARM ISOs from 
+the section that discusses how to build and install from ISO.
+
+Added the discovery that the ISO downloaded by Parallels 18 can be used to install a VM 
+in Fusion 13.
+
+Added a note to section 12.6 to discourage the installation of a VM from Insider Preview 
+VHDX files.
+
+Added a warning to the Windows 11 folder sharing workaround to disable file sharing when 
+connected to insecure networks. 
+
+----------------------------------------
+Version 9.1	20-Feb-2023
+----------------------------------------
+
+Enhancement of procedures in Appendix B and Appendix D to work around bugs in an open 
+source utility used in the ISO build process on macOS.
+
+----------------------------------------
+Version 9	18-Feb-2023
+----------------------------------------
+
+Added information on a newly discovered issue with blank screens on boot of Ubuntu 22.10 
+VMs. Ubuntu has broken their kernel once again with an update, and procedures have been 
+included to provide a workaround..
+
+Re-introduction of instructions for building the "mainline" utility for installing 
+alternate kernels in an Ubuntu VM. This was required as part of the workaround to Ubuntu 
+22.10 recent kernel issues.
+
+Appendix B now includes instructions for Homebrew users to install an alternate cabextract 
+utility that works around an issue that caused ISO builds from uupdump.net to fail on 
+macOS systems.
+
+----------------------------------------
+Version 8	05-Feb-2023
+----------------------------------------
+
+Added of OpenSUSE Leap 15.5 alpha as a distro known to work with Fusion.
+
+Re-branded the Glossary as Appendix A
+
+Moved instructions for obtaining open source utilities from Homebrew into Appendix B.
+
+Added an Appendix C containing instructions for obtaining open source utilities from 
+MacPorts as an alternative to Homebrew.
+
+Procedures in the Windows 11 ARM section remove references to Homebrew. They now assume 
+that required open source utilities have been installed from either Appendix B (Homebrew) 
+or Appendix C (MacPorts).
+
+----------------------------------------
+Version 7	24-Jan-2023
+----------------------------------------
+
+Addition of a "known good distribution" list earlier in the guide. That may help users new 
+to Fusion 13 to select a distribution.
+
+Update to the OpenSUSE Tumbleweed installation and upgrade issues noted in version 6 of 
+the guide (short version: they're fixed!).
+
+Re-verification of Ubuntu download links. Bad news, though. Ubuntu has removed arm64 ISOs 
+for the pre-release 23.04 daily builds.
+
+Clarification on how to obtain Ubuntu Desktop on ARM (short version: they don't make it 
+easy).
+
+Addition of info on Microsoft licensing and activation for Windows 11 ARM.
+
+Addition of information to the Windows 11 installation from ISO procedure. The procedure 
+has been enhanced with screen shots of Windows Setup immediately after boot from an 
+installation ISO.
+
+Update of free disk space requirements when building ISOs from uupdump.net on Windows.
+
+----------------------------------------
+Version 6	08-Jan-2023
+----------------------------------------
+
+A workaround is included for a bug recently found in OpenSUSE Tumbleweed snapshots 
+20221219 and later. The bug prevents installation from newly download installer ISOs, 
+and breaks existing VMs updating to the latest Tumbleweed snapshot. This bug is not 
+exclusive to Fusion on Apple Silicon. It impacts any physical and virtual ARM64 
+architecture installation.
+
+Fixed some typos in the Ubuntu 22.04.1 download links. The links work properly but the 
+descriptive text in the table had some fat-fingered version numbers.
+
+----------------------------------------
+Version 5	29-Dec-2022
+----------------------------------------
+
+Details on the requirements for 3D support on Linux guests has been added, filling in the 
+missing pieces that VMware did not include in the release notes or documentation. Several 
+questions about this have been asked recently in the forums.
+
+The section on the 'Start pxe over IPv4" message has been moved to the General Notes 
+section and enhanced, as it impacts all guests.
+
+Multiple monitors and Unity have been added to the list of features not supported by 
+Fusion 13 on Apple Silicon.
+
+Text mode installation now works for latest versions of the CentOS 9 Stream installer. 
+The former workaround has been moved to the Archived Topics section.
+
+The Glossary has been moved to the end of the document.
+
+Minor formatting issues such as typos, section numbering, and table layout have been 
+corrected.
+
+Request to the community for any info on what works and what doesn't in the Oracle 
+VirtualBox 7 developer preview on Apple Silicon - what really works and what doesn't 
+because it's not clear from any documentation provided by VirtualBox.
+
+----------------------------------------
+Version 4	12-Dec-2022
+----------------------------------------
+
+Corrects the links for download of Ubuntu installation ISOs, and adds information on the
+ Ubuntu 23.04 development daily builds.
+
+----------------------------------------
+Version 3	04-Dec-2022
+----------------------------------------
+
+The wording of some content has been modified from community feedback to improve its 
+accuracy.
+
+Creation of a new Archived Topics section to preserve workarounds for issues that have 
+been fixed by newer releases of Fusion and/or Linux/Windows versions.
+
+Updating of the RHEL section to reflect the release of RHEL 9.1 and fixing of several 
+issues.
+
+Addition of recommendations for the creation of an OpenSUSE Tumbleweed virtual machine.
+
+Addition of URLs for download of Ubuntu daily releases, some of which were formerly found 
+in the Tech Preview Testing Guide.
+
+Better quality screen shot images in the procedure for building Windows 11 ISO images on 
+the Mac.
+
+Additional items in the glossary.
+
+----------------------------------------
+Version 2	24-Nov-2022
+----------------------------------------
+
+A significant issue was discovered with Windows 11 ISO media built on macOS using the 
+procedures in Version 1.
+
+Guidance and procedures on how to successfully build ISO installation media for Windows 
+has changed in Version 2 based on these discoveries.
+
+----------------------------------------
+Version 1 - 21-Nov-2022
+----------------------------------------
+
+Initial publication.
+

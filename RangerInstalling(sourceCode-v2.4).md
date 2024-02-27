@@ -30,7 +30,7 @@ sudo update-alternatives --config java
 # Set JAVA_HOME  
 export JAVA_HOME=/usr/lib/jvm/java-1.11.0-openjdk-amd64 
 # OR this for apple silicon devices
-export JAVA_HOME=/usr/lib/jvm/java-1.11-openjdk-arm64 
+export JAVA_HOME=/usr/lib/jvm/java-1.11.0-openjdk-arm64 
 ``` 
 
 
@@ -39,7 +39,7 @@ export JAVA_HOME=/usr/lib/jvm/java-1.11-openjdk-arm64
 
 You need first to switch to root user or *sudo* them : `su - tariq # This my username in sudo group`  
 
-*Note*: This is the only way to install the latest version of maven, the upcoming other way of using `sudo apt install maven` doesn't   
+*Note*: This is the only way to install the *latest version* of maven, the upcoming other way of using `sudo apt install -y maven` doesn't   
 
 ``` bash  
 

@@ -108,11 +108,15 @@ sudo systemctl reboot
 #Upon reboot, the VM should display a graphical login. Logging in will now start a graphical session
 ```  
 
-## Setup XRDP (Remote Desktop Protocol)  
-This is necessary to make copy paste work between the Guest os and the host, as I have tried to make this work through VMware fusion player only and it faild !, and I think because i have an apple silicon device  
+## Guide on how to setup Remote access to your VM
 
-**NOTE**   You don't have to actually enable XRDP   as i have descovered later that copy paste from/to VM, will work fine after you convert your Ubunutu server to desktop !!!
+This is necessary to make copy paste work between the Guest os and the host, as I have tried to make this work through VMware fusion player only and it faild !, and I think because i have an apple silicon device.  
+Or you can use SSH instead of XRDP
 
+**NOTE**    You don't have to actually enable `xrdp` or `ssh` to enable copy and paste, as I have descovered later that copy paste from/to VM, will work fine after you convert your Ubunutu server to desktop !!!
+
+### Guide on how to use `xrdp`  
+***NOTE***  Unforuantly xrdp didn't want to work on Ubunut 20.04 LTS
 1-  Install some necessary packages to make remote desktop work `sudo apt install -y vim net-tools openssh-server xrdp`
 
 2-  This will enable xrdp on ubuntu `sudo systemctl enable --now xrdp`  
@@ -123,7 +127,8 @@ This is necessary to make copy paste work between the Guest os and the host, as 
 # It will be somthing like this "ens160"
 ip link
 cd /etc/netplan  
-sudo vim 00-installer-config.yaml
+sudo cp 00-installer-config.yaml netplan1.yaml
+sudo vim netplan1.yaml
 ```  
 Then add the following configuration  
 ```YAML
@@ -139,25 +144,81 @@ network:
       nameservers:
         addresses: [8.8.8.8, 8.8.4.4] # DNS server address
 ```
+
 ```bash
-sudo netplan apply
+sudo netplan generate netplan1.yaml # This will show no output if the file is written correctly
+sudo netplan apply netplan1.yaml # This will apply the new network configuration
 
 if config # Check that the ip address has changed !
-```
-3-  Download *xrdp* from app store on mac
+```  
 
+3- Also you need to change the network of the vm (VMware fusion player):
+    1.  Shutdown the vm
+    2.  Open vm settings
+    3.  Go to *Network Adapter*
+    4.  Then switch to *Wi-Fi*
 
-4-  Now lets connect using the *xrdp*, open *xrdp* app  mac and then click on the plus sign
+4-  Download *xrdp* from app store on mac
 
-5-  Then click on `Add PC`
+5-  Now lets connect using the *xrdp*, open *xrdp* app  mac and then click on the plus sign
+
+6-  Then click on `Add PC`
 
 6- Type in the host name or your static ip address of the ubuntu VM  device  in `PC name` field then click `add`
 
 7-  Then click the window of the new device you just added, then connect to it using your username and password
 
+### Guide on how to use `ssh`  
+
+1.  Install some necessary packages to make remote desktop work `sudo apt install -y vim net-tools openssh-server`
+
+3.  To make things easier, lets assign a static IP to our Ubuntu
+```bash
+# This to know your network interface
+# It will be somthing like this "ens160"
+ip link
+cd /etc/netplan  
+sudo cp 00-installer-config.yaml netplan1.yaml
+sudo vim netplan1.yaml
+```  
+
+Then add the following configuration  
+```YAML
+# This is the network config written by 'subiquity'
+network:
+  version: 2
+  renderer: networkd # Add this if you are using the server edition and not the desktop edition of ubuntu
+  ethernets:
+    ens160:
+      dhcp4: false
+      addresses: [192.168.1.50/24] # The desired static ip address
+      gateway4: 192.168.1.1 # Default gatway
+      nameservers:
+        addresses: [8.8.8.8, 8.8.4.4] # DNS server address
+```
+
+```bash
+sudo netplan generate netplan1.yaml # This will show no output if the file is written correctly
+sudo netplan apply netplan1.yaml # This will apply the new network configuration
+
+if config # Check that the ip address has changed !
+```  
+
+3. Also you need to change the network of the vm (VMware fusion player):
+    1.  Shutdown the vm
+    2.  Open vm settings
+    3.  Go to *Network Adapter*
+    4.  Then switch to *Wi-Fi*
+
+4.  Open up *terminal* of mac
+
+5. Execute this: `ssh -Y UsernameOfUbuntu@hostname/ip`
+
+6. Then type the password
+
+7. Now you are controlling the remote VM
 
 # VM setup on Windows
-
 
 ## Creating Ubuntu image and setting up VM using Hyber-V
 -   Search for "Hyber-V" using windows search bar
