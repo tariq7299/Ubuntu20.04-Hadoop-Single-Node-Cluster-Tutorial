@@ -230,7 +230,13 @@ if config # Check that the ip address has changed !
 -   Then press on Create Virtual Machine
 -   Wait and... DONE !! Now hopfully Your Ubuntu has been installed successfully!
 
-*Note*: Follow steps in section "Configuring Ubuntu and VM to make...." if only `Enhanced session mode` is not working in your VM
+***NOTE***  If you can't find it then do this:
+
+-   Search for "turn windows features on or off" in the windows search bar.
+-   Select and enable "Hyper-V"
+-   Restart your device!
+
+***NOTE***  Follow steps in section "Configuring Ubuntu and VM to make...." if only `Enhanced session mode` is not working in your VM
 
 ## Configuring Ubuntu and VM to make "Enhanced Session" mode work
 -   Turn on your Ubuntu image
@@ -250,12 +256,63 @@ if config # Check that the ip address has changed !
 -   Make sure your are in "Enhanced Session" mode
 -   You will be propmted to enter your "username" and "password" enter them and press "Ok" (the username and password of your Ubuntu image)  
 
-ERROR: *You have encounterd a black screen*
--   Then that means that your are already logged in!, so you need to logout first!
--   To logout, start ubuntu image using `Basic Session` from the top bar of `Hyber-V` window, then login, then open terminal and then logout using `sudo pkill -KILL -u <username>` or `gnome-session-quit`
--   Then go back to "Enhanced Session" and login again!      
+What to do if you encounter this Error: You have encounterd a black screen
 
-&nbsp;  
+-   Then that means that your are already logged in!, so you need to logout first!
+-   To logout, start ubuntu image using Basic Session from the top bar of Hyber-V window, then login, then open terminal and then logout using sudo pkill -KILL -u <username> or gnome-session-quit
+-   Then go back to "Enhanced Session" and login again!
+    
+# Assigning the correct RAM memory, Local storage to your VM
+***NOTE***  THis a necessaty step as the space of Hadoop and Ranger will take more than the default allocated space at
+
+### RAM
+
+#### Using Hyper-v
+1.  Right click on your VM in hyper-V manger, then press "settings"
+2.  Choose "Memory" then write "4096" in "RAM" field to make your VM take 4GB of mememory
+3.  Click Apply then OK  
+
+#### Using Vmware
+-   Very easy...
+
+### Storage
+***NOTE***  When you use Ubuntu server edition you actaully get the chance to expland the storage in the setup menue of the OS itself, so you can skip the following steps of.
+
+1.  You need to shutdown your VM first and after that wait for a couple of seconds if it is "Merging"
+2.  Right click on your VM in found in Hyper-V manager
+3.  Then choose "Settings"
+4.  Click on "Hard Drive" then Choose "Edit"
+5.  Click next
+6.  Then choose "Expand" then "next"
+7.  Assign the appropriate storage to suit your needs, lets say 40GB
+8.  Click "Next"
+9.  Click "OK"
+10.  Then clicl on "Apply"
+
+&npbs;
+
+-   *Now we have also to expand our dirve inside the guest machine to take this extra space*
+12.  Start your VM
+13.  Then open terminal and then type: `sudo apt-get install cloud-utils # this will install a tool to enable us to resize our disk`
+14.  Identify the current Ubuntu partition (usually sda1): `sudo fdisk -l`
+15.  Resize the partition (Replace sda1 with the correct partition, look for partiotion with type "Linux Filesystem"): `sudo growpart /dev/<partintionName> <partitionNumber>`  
+
+*We need to first check if the partition is in ***LVM*** (Logical Volume Group), before we can a expand the ***filesystem***.* 
+
+16. Check if the partion is a member of logical group or not first: `lsblk -f` see under `FSTYPE`
+    A.  Not a member of any LVMs
+        1.  Resize the fileSystem: `sudo resize2fs /dev/sda1`
+        2.  Verify the expanded space: `df -h`
+    B.  A memeber of a LVM  
+        1.  We need first to extend the physical volume first, but to extend it we have to know first the <vg> and <lv>, so do this:
+        ```bash
+        # This will show all the info of the LVMs in your system
+        # Look at "LV PATH"  
+        sudo lvdisplay
+        ```
+        2.  Extend the physical volume: `sudo lvextend -l +100%FREE /dev/<myvg>/<mylv>`
+        3.  Extend the logical volume (filesystem): `sudo resize2fs /dev/<myvg>/<myvl>`
+        4.  Verify the expanded space: `df -h` *OR* `sudo lvs` *OR* `sudo fdisk -l` *OR* `lsblk -f`
 
 # Installing and Configuring Hadoop
 
