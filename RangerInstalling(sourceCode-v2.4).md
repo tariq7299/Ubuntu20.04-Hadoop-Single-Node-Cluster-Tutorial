@@ -327,9 +327,57 @@ ranger-admin start
 Then fill in the info, like the first name and last name...etc
 
 
+## Configure Ranger UserSync
+1- Untar the Ranger UserSync tar file  
+```bash  
+cd /usr/local
+sudo tar xvf ~/git/dev/ranger/target/ranger-2.4.0-usersync.tar.gz
+sudo ln -s ranger-2.4.0-usersync/ ranger-usersync  # Create a symbolic link
+cd ranger-usersync
+```  
+
+2- Create necessary log dir
+```bash   
+sudo mkdir -p /var/log/ranger/usersync
+sudo chown ranger:ranger /var/log/ranger && sudo chown ranger:ranger /var/log/ranger/usersync
+```  
+
+Now we have many choices to configure Ranger usersync, here we will use two of them (`unix`, `LDAP`)
+
+### Configure Range usersync with `unix`  
+1-  Head to ranger-usersync dir: `cd /usr/local/ranger-usersync`
+
+2-  Edit the install.properties file with appropriate unix values
+```bash
+POLICY_MGR_URL = http://HOST_ADDRESS:6080
+SYNC_SOURCE = unix
+logdir = /var/log/ranger/usersync
+```
+
+3- Install usersync by running `./setup.sh`
+```bash
+ This sets JAVA_HOME env variable for sudo environment ! (this is necesseray)
+# So use JDK 8 or JDK 11 ! I think it suppose to be 8 or heigher !
+sudo JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64 ./setup.sh
+
+# And this for apple silicon devices
+sudo JAVA_HOME=/usr/lib/jvm/java-11-openjdk-arm64 ./setup.sh
+```
+
+4- Start and stop services of usersync
+```bash
+./ranger­-usersync-services.sh start # Access usersync from ranger web portal at localhost:6080
+
+./ranger­-usersync-services.sh stop
+```
 
 
-## Guide to Setup and Configue a `LDAP` server  
+### Configure Range usersync with `LDAP`
+
+First we need to setup the LDAP server
+
+#### Guide to Setup and Configue a `LDAP` server  
+
 
 1- Download `OpenLDAP` package
 ```bash  
@@ -447,21 +495,3 @@ ldapsearch -x -H ldap://localhost -b "dc=example,dc=com" -D "cn=admin,dc=example
 
 You can replace this `-H ldap://localhost` with `-H ldapi:///`  
 This `ldapi:///` means that the "LDAP" server is running on the same machine or within the same network.
-
-## Configure Ranger UserSync Plugin with LDAP  
-
-1- Untar the Ranger UserSync tar file  
-```bash  
-cd /usr/local
-sudo tar xvf ~/git/dev/ranger/target/ranger-2.4.0-usersync.tar.gz
-sudo ln -s ranger-2.4.0-usersync/ ranger-usersync  # Create a symbolic link
-cd ranger-usersync
-```  
-
-2- Create necessary log dir
-```bash   
-sudo mkdir -p /var/log/ranger/usersync
-sudo chown ranger:ranger /var/log/ranger && sudo chown ranger:ranger /var/log/ranger/usersync
-```  
-
-3- 
