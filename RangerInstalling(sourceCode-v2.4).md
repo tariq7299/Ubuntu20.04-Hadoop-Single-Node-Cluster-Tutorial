@@ -92,7 +92,7 @@ cd ~/git/dev
 sudo git clone https://github.com/apache/ranger.git
 cd ranger 
 # This will make us build the latest version to date (Ranger 2.4)
-git checkout tags/release-ranger-2.4.0 -b ranger-2.4
+sudo git checkout tags/release-ranger-2.4.0 -b ranger-2.4
 ````
 
 2-  Build the source code
@@ -194,9 +194,13 @@ sudo vim install.properties
 
 ```bash
 SOLR_INSTALL = true
-SOLR_DOWNLOAD_URL = https://archive.apache.org/dist/lucene/solr/8.9.0/solr-8.9.0.tgz
+SOLR_DOWNLOAD_URL = https://archive.apache.org/dist/solr/solr/9.5.0/solr-9.5.0.tgzz
+# For apple silicon devices only versions complatible with java 8 is working
+# SOLR_DOWNLOAD_URL = https://archive.apache.org/dist/lucene/solr/8.9.0/solr-8.9.0.tgz 
 SOLR_INSTALL_FOLDER = /opt/solr
-JAVA_HOME = /usr/lib/jvm/java-11-openjdk-amd64/ # or arm64 for apple silicon devices
+JAVA_HOME = /usr/lib/jvm/java-11-openjdk-amd64 
+# For apple silicon devices only java 8 is compatible and working
+# JAVA_HOME = /usr/lib/jvm/java-8-openjdk-arm64
 SOLR_USER = solr
 SOLR_RANGER_HOME = /opt/solr/ranger_audit_server
 SOLR_RANGER_PORT = 6083
@@ -238,8 +242,8 @@ sudo passwd solr
 7- Start `Solr`  
 ```bash 
 su solr # switch to solr user
-/opt/solr/ranger_audit_server/scripts/start_solr.sh # start solr for any device except apple silicon devices
-/opt/solr/bin/solr start -p 6083 # For apple silicon devices
+
+/opt/solr/ranger_audit_server/scripts/start_solr.sh
 ```  
 
 8- Check for solr by accessing the web portal of `localhost:6083`
@@ -250,9 +254,9 @@ su solr # switch to solr user
 ```bash  
 cd /usr/local
 # Untart the file in the same dir
-sudo tar xvf ~/git/dev/ranger/target/ranger-2.4.0-admin.tar.gz  
+sudo tar xvf ~/git/dev/ranger/target/ranger-2.4.0-admin.tar.gz -C /usr/local
 # This sets a symbolic link to "ranger-2.4.0-admin" so we can access the folder "ranger-2.4.0-admin" by "ranger-admin"
-sudo ln -s ranger-2.4.0-admin/ ranger-admin  
+sudo ln -s /usr/localranger-2.4.0-admin/ /usr/localranger-admin  
 cd /usr/local/ranger-admin/
 ```    
 
@@ -295,8 +299,8 @@ sudo ln -s /usr/share/java/mysql-connector-java-8.0.33.jar /usr/share/java/mysql
 # So use JDK 8 or JDK 11 ! I think it suppose to be 8 or heigher !
 sudo JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64 ./setup.sh
 
-# And this for apple silicon devices
-sudo JAVA_HOME=/usr/lib/jvm/java-11-openjdk-arm64 ./setup.sh
+# And this for apple silicon devices, only compatible version is java 8
+sudo JAVA_HOME=/usr/lib/jvm/java-8-openjdk-arm64 ./setup.sh
 ```  
 
 6- Create necessary dir called `/var/run/ranger`

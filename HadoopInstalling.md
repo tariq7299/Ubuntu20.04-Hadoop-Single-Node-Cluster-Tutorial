@@ -63,9 +63,9 @@ sudo apt -y update && sudo apt -y upgrade
 
 ## Convert arm64 Ubuntu 22.04 LTS server edition to desktop edition 
 
-1.  Install Ubuntu desktop package: `sudo apt install ubuntu-desktop`  
+1.  Install Ubuntu desktop package: `sudo apt install ubuntu-desktop -y`  
 
-2.  Install open-vm-tools-desktop package `sudo apt install open-vm-tools-desktop`  
+2.  Install open-vm-tools-desktop package `sudo apt install open-vm-tools-desktop -y`  
 
 3.  Install Ubuntu Software from the Snap store `sudo snap install snap-store`  
 
@@ -76,7 +76,7 @@ sudo systemctl disable systemd-networkd.service
 sudo systemctl mask systemd-networkd.service
 sudo systemctl stop systemd-networkd.service
 ```
-5.  Save a copy of the .yaml file found inside the /etc/netplan directory `cp /etc/netplan/*.yaml ./`  
+5.  Save a copy of the .yaml file found inside the /etc/netplan directory `sudo cp /etc/netplan/*.yaml ./`  
 
 6.  Edit the .yaml file found inside the /etc/netplan directory (there should be only one, and its name may vary between Ubuntu releases). Use the editor of your choice; you will need to execute the editor with sudo as the .yaml file is owned by root. 
 ```bash
