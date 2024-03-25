@@ -191,10 +191,11 @@ Solr is going to store the audit logs
 ```bash  
 sudo vim install.properties
 ```
+3- IF you are using apple silicon device you might want to install java 8 first ! `sudo apt-get install openjdk-8-jre`
 
 ```bash
 SOLR_INSTALL = true
-SOLR_DOWNLOAD_URL = https://archive.apache.org/dist/solr/solr/9.5.0/solr-9.5.0.tgzz
+SOLR_DOWNLOAD_URL = https://archive.apache.org/dist/solr/solr/9.5.0/solr-9.5.0.tgz
 # For apple silicon devices only versions complatible with java 8 is working
 # SOLR_DOWNLOAD_URL = https://archive.apache.org/dist/lucene/solr/8.9.0/solr-8.9.0.tgz 
 SOLR_INSTALL_FOLDER = /opt/solr
@@ -256,7 +257,7 @@ cd /usr/local
 # Untart the file in the same dir
 sudo tar xvf ~/git/dev/ranger/target/ranger-2.4.0-admin.tar.gz -C /usr/local
 # This sets a symbolic link to "ranger-2.4.0-admin" so we can access the folder "ranger-2.4.0-admin" by "ranger-admin"
-sudo ln -s /usr/localranger-2.4.0-admin/ /usr/localranger-admin  
+sudo ln -s /usr/local/ranger-2.4.0-admin/ /usr/local/ranger-admin  
 cd /usr/local/ranger-admin/
 ```    
 
@@ -293,14 +294,16 @@ policymgr_external_url=http://localhost:6080
 sudo ln -s /usr/share/java/mysql-connector-java-8.0.33.jar /usr/share/java/mysql-connector-java.jar
 ```  
 
+# EDIT THIS !!!!!!!!! (still not the correct command for apple silicon devices)
 5- run setup.sh :   
 ```bash
 # This sets JAVA_HOME env variable for sudo environment ! (this is necesseray)
 # So use JDK 8 or JDK 11 ! I think it suppose to be 8 or heigher !
 sudo JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64 ./setup.sh
 
-# And this for apple silicon devices, only compatible version is java 8
-sudo JAVA_HOME=/usr/lib/jvm/java-8-openjdk-arm64 ./setup.sh
+# For apple silicon devices
+sudo JAVA_HOME=/usr/lib/jvm/java-11-openjdk-arm64 ./setup.sh # OR 
+# sudo JAVA_HOME=/usr/lib/jvm/java-8-openjdk-arm64 ./setup.sh
 ```  
 
 6- Create necessary dir called `/var/run/ranger`
@@ -353,14 +356,20 @@ Now we have many choices to configure Ranger usersync, here we will use two of t
 
 2-  Edit the install.properties file with appropriate unix values
 ```bash
+sudo vim install.properties
+
 POLICY_MGR_URL = http://HOST_ADDRESS:6080
 SYNC_SOURCE = unix
 logdir = /var/log/ranger/usersync
 ```
+3-  But first install `python`
+```bash
+sudo apt install python -y
+```
 
 3- Install usersync by running `./setup.sh`
 ```bash
- This sets JAVA_HOME env variable for sudo environment ! (this is necesseray)
+ # This sets JAVA_HOME env variable for sudo environment ! (this is necesseray)
 # So use JDK 8 or JDK 11 ! I think it suppose to be 8 or heigher !
 sudo JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64 ./setup.sh
 

@@ -44,8 +44,9 @@ But you have to create an account first !
 
 18- In `Storage configuration` we want to resize the filesystem drive to take the whole 50 GB, we have allocated to this VM:
     -   Under `FILE SYSTEM SUMMARY` `Unmount` `/` 
-    -   Then under `USED DEVICES` click on `ubuntu 22.04....` and click `Delete`  
-    -   Then click on `free space` and then create a new logincal drive using all of the available space  
+    -   Then under `USED DEVICES` click on `ubuntu 22.04....` and click `edit`
+    -   Then edit the the total space to take all the available space  
+    -   Then click on choose from `Mount:` to be mounted to `/`
 
 19- Then type your info  then `Done`  
 
@@ -69,7 +70,8 @@ sudo apt -y update && sudo apt -y upgrade
 
 3.  Install Ubuntu Software from the Snap store `sudo snap install snap-store`  
 
-4.  Disable the use of `systemd-networkd` and replces it by `NetworkManager`
+4.  Disable the use of `systemd-networkd` and replces it by `NetworkManager`  
+
 **NOTE** This is necessary because Ubuntu desktop edition and some of its apps and services uses `NetworkManager`
 ```bash
 sudo systemctl disable systemd-networkd.service
@@ -82,7 +84,7 @@ sudo systemctl stop systemd-networkd.service
 ```bash
 # Example using vim text editor
 cd /etc/netplan
-sudo vim 00-installer-config.yaml
+sudo vim 00-installer-config.yaml # OR whatever your network file named is
 ``` 
 
 7.  Replace the entire contents of the .yaml file with the following:
@@ -93,7 +95,7 @@ renderer: NetworkManager
 ```
 
 8.  Set the system to use NetworkManager for networking management.
-```bash
+``` bash
 sudo netplan generate
 sudo systemctl unmask NetworkManager
 sudo systemctl enable NetworkManager
@@ -201,7 +203,7 @@ network:
 sudo netplan generate netplan1.yaml # This will show no output if the file is written correctly
 sudo netplan apply netplan1.yaml # This will apply the new network configuration
 
-if config # Check that the ip address has changed !
+ifconfig # Check that the ip address has changed !
 ```  
 
 3. Also you need to change the network of the vm (VMware fusion player):
@@ -213,6 +215,8 @@ if config # Check that the ip address has changed !
 4.  Open up *terminal* of mac
 
 5. Execute this: `ssh -Y UsernameOfUbuntu@hostname/ip`
+
+***NOTE*** Somtimes it won't let you connect so try to `ssh-keygen -R <ipOfGuestVM>`
 
 6. Then type the password
 
@@ -293,23 +297,31 @@ What to do if you encounter this Error: You have encounterd a black screen
 
 -   *Now we have also to expand our dirve inside the guest machine to take this extra space*
 12.  Start your VM
-13.  Then open terminal and then type: `sudo apt-get install cloud-utils # this will install a tool to enable us to resize our disk`
+13.  Then open terminal and then type: 
+``` bash
+sudo apt-get install cloud-utils # this will install a tool to enable us to resize our disk
+```
 14.  Identify the current Ubuntu partition (usually sda1): `sudo fdisk -l`
 15.  Resize the partition (Replace sda1 with the correct partition, look for partiotion with type "Linux Filesystem"): `sudo growpart /dev/<partintionName> <partitionNumber>`  
 
 *We need to first check if the partition is in ***LVM*** (Logical Volume Group), before we can a expand the ***filesystem***.* 
 
-16. Check if the partion is a member of logical group or not first: `lsblk -f` see under `FSTYPE`
-    A.  Not a member of any LVMs
+16. Check if the partion is a member of logical group or not first: `lsblk -f` see under `FSTYPE`  
+
+    A.  Not a member of any LVMs  
+
         1.  Resize the fileSystem: `sudo resize2fs /dev/sda1`
-        2.  Verify the expanded space: `df -h`
-    B.  A memeber of a LVM  
-        1.  We need first to extend the physical volume first, but to extend it we have to know first the <vg> and <lv>, so do this:
-        ```bash
+        2.  Verify the expanded space: `df -h`  
+
+    B.  A member of a LVM 
+    
+        1.  We need first to extend the physical volume first, but to extend it we have to know first the <vg> and <lv>, so do this:  
+
+        ``` bash
         # This will show all the info of the LVMs in your system
         # Look at "LV PATH"  
-        sudo lvdisplay
-        ```
+        sudo lvdisplay 
+        ```  
         2.  Extend the physical volume: `sudo lvextend -l +100%FREE /dev/<myvg>/<mylv>`
         3.  Extend the logical volume (filesystem): `sudo resize2fs /dev/<myvg>/<myvl>`
         4.  Verify the expanded space: `df -h` *OR* `sudo lvs` *OR* `sudo fdisk -l` *OR* `lsblk -f`
@@ -347,7 +359,7 @@ ssh localhost # This will just check if ssh is correctly installed and configure
 ##  Download and install Hadoop
 -   First switch to 'tariq' super user `su - tariq`
 -   Download hadoop:
- ```
+ ``` bash
  # This is for Windows hosts
  wget -P ~/Downloads https://downloads.apache.org/hadoop/common/hadoop-3.3.6/hadoop-3.3.6.tar.gz
 
@@ -355,8 +367,13 @@ ssh localhost # This will just check if ssh is correctly installed and configure
  wget -P ~/Downloads https://dlcdn.apache.org/hadoop/common/hadoop-3.3.6/hadoop-3.3.6-aarch64.tar.gz
 ```
 -   Finish the exctraction and insy running the following commands: 
-```   bash
+```bash
+# For windows(amd64) devices
 sudo tar xzf ~/Downloads/hadoop-3.3.6.tar.gz -C ~/Downloads
+
+# For apple silicon (arm64) devices
+sudo tar xzf ~/Downloads/hadoop-3.3.6-aarch64.tar.gz -C ~/Downloads
+
 sudo mv ~/Downloads/hadoop-3.3.6 /usr/local/hadoop # This will change the folder name from hadoop-3.3.6 to hadoop
 sudo chown -R hdoop:hdoop /usr/local/hadoop
 ```   
@@ -443,6 +460,7 @@ su - hdoop
 echo 'export JAVA_HOME=$(readlink -f `which java` | sed "s:/bin/java::")' >> ~/.bashrc
 source ~/.bashrc 
 
+# Formate the namenode 
 /usr/local/hadoop/bin/hdfs namenode -format
 ```
 
