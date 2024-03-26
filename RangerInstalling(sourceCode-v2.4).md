@@ -338,7 +338,7 @@ Then fill in the info, like the first name and last name...etc
 1- Untar the Ranger UserSync tar file  
 ```bash  
 cd /usr/local
-sudo tar xvf ~/git/dev/ranger/target/ranger-2.4.0-usersync.tar.gz
+sudo tar xvf ~/git/dev/ranger/target/ranger-2.4.0-usersync.tar.gz -C /usr/local
 sudo ln -s ranger-2.4.0-usersync/ ranger-usersync  # Create a symbolic link
 cd ranger-usersync
 ```  
