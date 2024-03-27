@@ -89,7 +89,8 @@ sudo apt install -y gcc
 ``` bash  
 mkdir -p ~/git/dev
 cd ~/git/dev
-sudo git clone https://github.com/apache/ranger.git
+sudo git clone https://github.com/apache/ranger.git # If this didn't work go to "EnableSshForGithub.md" file and follow the steps
+
 cd ranger 
 # This will make us build the latest version to date (Ranger 2.4)
 sudo git checkout tags/release-ranger-2.4.0 -b ranger-2.4
