@@ -1,0 +1,33 @@
+# Here i will show how to connect to your windows pc from mac
+
+1. First enable `Remote Desktop` in your remote device  
+    -   Go to "settings"
+    -   Then "system"
+    -   Then "Remote Desktop"
+    -   Then turn on "Enable Remote Desktop"
+    -   Then click on "Show settings" of "Keep my PC awake for connections when it is plugged in"
+    -   Then make all "never"
+    -   Then go back
+    -   Click on "Show settings" of "Make my PC discoverable on private networks to enable automatic connections from a remote device"
+    -   Mark "Turn on network discovery" on all profils
+
+2.  Know your `Hostname`  
+    -   Go to "Settigns"
+    -   Then "abount"
+    -   You will find it beside "Device name"
+
+3.  Know your `Domain\Username`  
+    -   Open `cmd`  
+    -   Then execute `whoami`
+
+4.  Download  `xrdp` on mac  
+    -   Search for "Microsoft Remote Desktop" then download it
+
+5.  Connect to remote pc using xrdp software  
+    -   Open the client software  
+    -   THen click on `+`
+    -   THen `Add pc`
+    -   THen type in the `hostname`
+    -   THen add
+    -   Then you will be prompted to enter the <Domain\Username> and <password>
+    -   DONE !!

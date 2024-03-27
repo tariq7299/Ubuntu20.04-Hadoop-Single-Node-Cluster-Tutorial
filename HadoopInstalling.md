@@ -225,7 +225,11 @@ ifconfig # Check that the ip address has changed !
 # VM setup on Windows
 
 ## Creating Ubuntu image and setting up VM using Hyber-V
--   Search for "Hyber-V" using windows search bar
+-   Go to control panel
+-   Then click on "programs"
+-   Then click "Programs and Features"
+-   Then click on "Turn Windows features on or off"
+-   Then click turn on hyber-v
 -   Enable "Hyber-V" checkbox then press ok
 -   Restart your PC
 -   Search for "Hyber-V" using windows search bar again
