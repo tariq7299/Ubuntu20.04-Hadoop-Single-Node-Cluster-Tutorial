@@ -17,4 +17,5 @@
     -   Create three sections (README-Prerequists&Configuring VM-HadoopInstalling-RangerInstalling)
     -   Change the name of the Repo to more decisive or even create a whole two repos! (one for (Ubuntu hadoop Single node cluster) and one for (Single Node Cluster and Ranger and Ldap) )
 -   Learn how to merge checkpoints in hyper-v  
+-   Enable remote desktop on your desktop pc in home to be able to access it through your mac device !
 -   

@@ -2,66 +2,33 @@
 
 ## Some Prerequistes before we actually install *Ranger*    
 
-### Installing java 11 (openJDK 11)  
+### Installing java 8 (openJDK 8)  
 
--   Make sure you have java 11 installed  
-```bash   
-tariq@tariq-Virtual-Machine:~/git/dev/ranger$ java -version
-openjdk version "11.0.21" 2023-10-17
-OpenJDK Runtime Environment (build 11.0.21+9-post-Ubuntu-0ubuntu120.04)
-OpenJDK 64-Bit Server VM (build 11.0.21+9-post-Ubuntu-0ubuntu120.04, mixed mode, sharing)
-```  
-If it is not installed then run this:   
+- Install JAVA 8
 
 ```bash   
-sudo apt install openjdk-11-jdk -y  
-export JAVA_HOME=/usr/lib/jvm/java-1.11.0-openjdk-amd64/
+sudo apt install openjdk-8-jre openjdk-8-jdk -y  
+export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64/
+echo 'export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64' >> ~/.bashrc
+
 # And this for apple silicon devices  
-export JAVA_HOME=/usr/lib/jvm/java-1.11-openjdk-arm64/
+export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-arm64/
 ```  
 
 *Note*: If you have another version installed already and you don't want to remove it do this:  
 
 ```bash 
-sudo apt install openjdk-11-jdk -y  
 sudo update-alternatives --config java
 # Then choose the java 11 to be the current java
-
-# Set JAVA_HOME  
-export JAVA_HOME=/usr/lib/jvm/java-1.11.0-openjdk-amd64 
-# OR this for apple silicon devices
-export JAVA_HOME=/usr/lib/jvm/java-1.11.0-openjdk-arm64 
 ``` 
-
 
 
 ### Installing Maven
 
 You need first to switch to root user or *sudo* them : `su - tariq # This my username in sudo group`  
 
-*Note*: This is the only way to install the *latest version* of maven, the upcoming other way of using `sudo apt install -y maven` doesn't   
-
 ``` bash  
-
-sudo mkdir /usr/local/maven  
-
-# Download maven latest distribution tar from apache maven site 
-# This the appropriate version of maven that is suitble for JDK/JAVA 7
-wget -P ~/Downloads https://dlcdn.apache.org/maven/maven-3/3.9.6/binaries/apache-maven-3.9.6-bin.tar.gz
-
-# Unzip the file
-sudo tar -xvf ~/Downloads/apache-maven-3.9.6-bin.tar.gz -C /usr/local/maven # This is going to *tar* the file into /usr/local
-
-# Set some env variables
-export M2_HOME=/usr/local/maven/apache-maven-3.9.6
-export M2=$M2_HOME/bin
-export PATH=$M2:$PATH
-
-# Just to make the changes permenant
-echo 'export M2_HOME=/usr/local/maven/apache-maven-3.9.6' >> ~/.bashrc
-echo 'export M2=$M2_HOME/bin' >> ~/.bashrc
-echo 'export PATH=$M2:$PATH' >> ~/.bashrc
-source ~/.bashrc 
+sudo apt install maven
 ```  
 
 ``` bash    
@@ -70,10 +37,9 @@ mvn -version
 ```  
 
 
-
 ### Install GIT  
 ``` bash  
-sudo apt install git
+sudo apt install git -y
 ```
 
 
@@ -104,12 +70,15 @@ sudo git checkout tags/release-ranger-2.4.0 -b ranger-2.4
 # "-Dassembly.plugin.version=3.1.0 -Dhadoop.version=3.3.0 -Dhbase.version=2.3.4 -Dzookeeper.version=3.6.1 -Dhive.version=3.0.0 -Dmysql-connector-java.version=8.0.28" This is just specifying some versions of the other Apache components
 # "'!plugin-ozone, !plugin-solr, !plugin-nifi, !plugin-nifi-registry, !plugin-kudu, !plugin-kms, !ranger-ozone-plugin-shim, !storm-agent, !ranger-storm-plugin-shim, !ranger-solr-plugin-shim, !ranger-atlas-plugin-shim, !plugin-atlas, !plugin-kylin, !ranger-kylin-plugin-shim'" This disables those plugins completely, because we don't need them
 
-sudo /usr/local/maven/apache-maven-3.9.6/bin/mvn clean compile package install -DskipTests=true -Dspotbugs.skip=true -Dchkstyle.skip=true -Dassembly.plugin.version=3.1.0 -Dhadoop.version=3.3.6 -Dhbase.version=2.3.4 -Dzookeeper.version=3.6.1 -Dhive.version=3.0.0 -Dmysql-connector-java.version=8.0.33 -pl '!plugin-ozone, !plugin-solr, !plugin-nifi, !plugin-nifi-registry, !plugin-kudu, !plugin-kms, !ranger-ozone-plugin-shim, !storm-agent, !ranger-storm-plugin-shim, !ranger-solr-plugin-shim, !ranger-atlas-plugin-shim, !plugin-atlas, !plugin-kylin, !ranger-kylin-plugin-shim'
+# JUST for refernece
+# sudo /usr/local/maven/apache-maven-3.9.6/bin/mvn clean compile package install -DskipTests=true -Dspotbugs.skip=true -Dchkstyle.skip=true -Dassembly.plugin.version=3.1.0 -Dhadoop.version=3.3.6 -Dhbase.version=2.3.4 -Dzookeeper.version=3.6.1 -Dhive.version=3.0.0 -Dmysql-connector-java.version=8.0.33 -pl '!plugin-ozone, !plugin-solr, !plugin-nifi, !plugin-nifi-registry, !plugin-kudu, !plugin-kms, !ranger-ozone-plugin-shim, !storm-agent, !ranger-storm-plugin-shim, !ranger-solr-plugin-shim, !ranger-atlas-plugin-shim, !plugin-atlas, !plugin-kylin, !ranger-kylin-plugin-shim'
 
-# This with solr
-sudo /usr/local/maven/apache-maven-3.9.6/bin/mvn clean compile package install -DskipTests=true -Dspotbugs.skip=true -Dchkstyle.skip=true -Dassembly.plugin.version=3.1.0 -Dhadoop.version=3.3.6 -Dhbase.version=2.3.4 -Dzookeeper.version=3.6.1 -Dhive.version=3.0.0 -Dmysql-connector-java.version=8.0.33 -pl '!plugin-ozone, !plugin-nifi, !plugin-nifi-registry, !plugin-kudu, !plugin-kms, !ranger-ozone-plugin-shim, !storm-agent, !ranger-storm-plugin-shim, !ranger-atlas-plugin-shim, !plugin-atlas, !plugin-kylin, !ranger-kylin-plugin-shim'
+sudo mvn clean compile package install -DskipTests=true -Dspotbugs.skip=true -Dchkstyle.skip=true -Dassembly.plugin.version=3.1.0 -Dhadoop.version=3.3.6 -Dhbase.version=2.3.4 -Dzookeeper.version=3.6.1 -Dhive.version=3.0.0 -Dmysql-connector-java.version=8.0.33 -pl '!plugin-ozone, !plugin-nifi, !plugin-nifi-registry, !plugin-kudu, !plugin-kms, !ranger-ozone-plugin-shim, !storm-agent, !ranger-storm-plugin-shim, !ranger-atlas-plugin-shim, !plugin-atlas, !plugin-kylin, !ranger-kylin-plugin-shim'
+
+# This would also work
+# Kylin is outputting an error !
+sudo mvn clean compile package install -DskipTests=true -Dspotbugs.skip=true -Dchkstyle.skip=true -pl '!plugin-kylin, !ranger-kylin-plugin-shim'
 ```  
-
 
 3- Make sure the build was successfull
 ```bash  
@@ -196,11 +165,9 @@ sudo vim install.properties
 
 ```bash
 SOLR_INSTALL = true
-SOLR_DOWNLOAD_URL = https://archive.apache.org/dist/solr/solr/9.5.0/solr-9.5.0.tgz
-# For apple silicon devices only versions complatible with java 8 is working
-# SOLR_DOWNLOAD_URL = https://archive.apache.org/dist/lucene/solr/8.9.0/solr-8.9.0.tgz 
+SOLR_DOWNLOAD_URL = https://archive.apache.org/dist/lucene/solr/8.9.0/solr-8.9.0.tgz 
 SOLR_INSTALL_FOLDER = /opt/solr
-JAVA_HOME = /usr/lib/jvm/java-11-openjdk-amd64 
+JAVA_HOME = /usr/lib/jvm/java-8-openjdk-amd64 
 # For apple silicon devices only java 8 is compatible and working
 # JAVA_HOME = /usr/lib/jvm/java-8-openjdk-arm64
 SOLR_USER = solr
@@ -300,17 +267,17 @@ sudo ln -s /usr/share/java/mysql-connector-java-8.0.33.jar /usr/share/java/mysql
 ```bash
 # This sets JAVA_HOME env variable for sudo environment ! (this is necesseray)
 # So use JDK 8 or JDK 11 ! I think it suppose to be 8 or heigher !
-sudo JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64 ./setup.sh
+sudo JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64/ ./setup.sh
 
 # For apple silicon devices
-sudo JAVA_HOME=/usr/lib/jvm/java-11-openjdk-arm64 ./setup.sh # OR 
+sudo JAVA_HOME=/usr/lib/jvm/java-8-openjdk-arm64 ./setup.sh # OR 
 # sudo JAVA_HOME=/usr/lib/jvm/java-8-openjdk-arm64 ./setup.sh
 ```  
 
 6- Create necessary dir called `/var/run/ranger`
 ```bash  
-sudo mkdir /var/run/ranger  
-sudo chown ranger:ranger /var/run/ranger  
+sudo chown ranger:ranger /var/run/ranger 
+sudo chmod 700 /var/run/ranger
 ```  
 
 7- Set password for `ranger` user
@@ -361,6 +328,7 @@ sudo vim install.properties
 
 POLICY_MGR_URL = http://HOST_ADDRESS:6080
 SYNC_SOURCE = unix
+hadoop_conf=/usr/local/hadoop/etc/hadoop
 logdir = /var/log/ranger/usersync
 ```
 3-  But first install `python`
@@ -372,10 +340,10 @@ sudo apt install python -y
 ```bash
  # This sets JAVA_HOME env variable for sudo environment ! (this is necesseray)
 # So use JDK 8 or JDK 11 ! I think it suppose to be 8 or heigher !
-sudo JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64 ./setup.sh
+sudo JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64/ ./setup.sh
 
 # And this for apple silicon devices
-sudo JAVA_HOME=/usr/lib/jvm/java-11-openjdk-arm64 ./setup.sh
+sudo JAVA_HOME=/usr/lib/jvm/java-8-openjdk-arm64 ./setup.sh
 ```
 
 4- Start and stop services of usersync

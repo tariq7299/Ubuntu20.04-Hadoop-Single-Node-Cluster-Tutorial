@@ -269,7 +269,28 @@ What to do if you encounter this Error: You have encounterd a black screen
 -   Then that means that your are already logged in!, so you need to logout first!
 -   To logout, start ubuntu image using Basic Session from the top bar of Hyber-V window, then login, then open terminal and then logout using sudo pkill -KILL -u <username> or gnome-session-quit
 -   Then go back to "Enhanced Session" and login again!
-    
+
+## Configure your VM to make it use the extenal network, to be able to access it from outside using ssh   
+
+***NOTE***  This will only work if the remote pc is in the same local network !     
+
+
+1.  Open Hyper-V manager then clicl on "Action" from the top bar  
+2.  Then choose "Virtual Switch Manager..."
+3.  Then Choose "External" then "Create Virtual Switch"
+4.  Then Click on "Apply" then "OK"  
+
+*Now we want to assign that new network switch we created to our Virtual Machine*  
+
+1.  Right click on the vm in "Virtual Machine" found in the Hyper-V Manager  
+2.  Then choose "settings" 
+3.  Then click on "Network Adapter"
+4.  Then choose the recently created Virtual Switch then "Apply" then "OK"
+
+*Finally inside your VM you should assing a static ip to it, to be able to access it from remote pc*  
+
+***You can refer to "Guide on how to setup Remote access to your VM" in this file***  
+
 # Assigning the correct RAM memory, Local storage to your VM
 ***NOTE***  THis a necessaty step as the space of Hadoop and Ranger will take more than the default allocated space at
 
