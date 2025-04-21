@@ -8,7 +8,7 @@ Setting up a secure Hadoop environment with proper authentication and authorizat
 
 ## Features
 
-- Complete Apache Hadoop 3.x single-node cluster setup
+- Complete Apache Hadoop 2.x single-node cluster setup
 - Apache Ranger integration for centralized security administration
 - OpenLDAP configuration for user authentication
 - Step-by-step installation process with explanations
@@ -42,7 +42,7 @@ Setting up a secure Hadoop environment with proper authentication and authorizat
 ### 3. Apache Ranger Installation
 
 - Prerequisites for Ranger
-- Database setup (MySQL/PostgreSQL)
+- Database setup (MySQL)
 - Configuring Ranger Admin service
 - Setting up Ranger plugins for HDFS and YARN
 - Initializing Ranger policies
@@ -68,12 +68,6 @@ Common issues and their solutions:
 - LDAP connection issues
 - Permission-related errors
 
-## Security Considerations
-
-- Best practices for securing your Hadoop cluster
-- Recommendations for production deployments
-- Security limitations of single-node setups
-
 ## Resources
 
 - Official Apache Hadoop documentation
@@ -84,10 +78,6 @@ Common issues and their solutions:
 ## Contributing
 
 Contributions to improve this guide are welcome! Please feel free to submit pull requests or open issues if you find areas that need clarification or enhancement.
-
-## License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
 
 ---
 
